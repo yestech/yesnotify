@@ -6,7 +6,6 @@ import org.yestech.notify.objectmodel.MutableNotification;
 import org.yestech.notify.objectmodel.NotificationJob;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.UUID;
 
 /**
@@ -19,48 +18,46 @@ public class NotificationBridge
         super();
     }
 
-    private static NotificationJob createMailJob() {
+    private static NotificationJob createNotificationJob() {
         UUID uid = UUID.randomUUID();
-        NotificationJob job = new NotificationJob(uid);
-        return job;
+        return new NotificationJob(uid);
     }
 
-    private static void addJobToNotification(INotificationJob job, INotification message) {
-        MutableNotification dmesg = (MutableNotification) message;
+    private static void addJobToNotification(INotificationJob job, INotification notification) {
+        MutableNotification dmesg = (MutableNotification) notification;
         dmesg.setJob(job);
     }
 
-    private static void addJobToMessages(INotificationJob job, Collection messages) {
-        Iterator mit = messages.iterator();
-        while(mit.hasNext()) {
-            INotification message = (INotification) mit.next();
-            addJobToNotification(job, message);
+    private static void addJobToNotifications(INotificationJob job, Collection<INotification> notifications) {
+        for (INotification notification : notifications)
+        {
+            addJobToNotification(job, notification);
         }
     }
 
     /**
-     * Sends an Email Using the Event System.  To create a {@link org.yestech.notify.objectmodel.INotification}, use the
+     * To create a {@link org.yestech.notify.objectmodel.INotification}, use the
      * {@link NotificationBuilder}.
      *
-     * @param message Message to send
+     * @param notification Notification to send
      */
-    public static void sendNotification(INotification message) {
-        NotificationJob job = createMailJob();
-        addJobToNotification(job, message);
-        job.addNotification(message);
+    public static void sendNotification(INotification notification) {
+        NotificationJob job = createNotificationJob();
+        addJobToNotification(job, notification);
+        job.addNotification(notification);
         throw new RuntimeException("Need to Enqueue");
     }
 
     /**
-     * Sends an Email Using the Event System.  To create a {@link org.yestech.notify.objectmodel.INotification}, use the
+     * To create a {@link org.yestech.notify.objectmodel.INotification}, use the
      * {@link NotificationBuilder}.
      *
-     * @param messages Messages to send
+     * @param notifications Notifications to send
      */
-    public static void sendNotifications(Collection<INotification> messages) {
-        NotificationJob job = createMailJob();
-        addJobToMessages(job, messages);
-        job.addNotifications(messages);
+    public static void sendNotifications(Collection<INotification> notifications) {
+        NotificationJob job = createNotificationJob();
+        addJobToNotifications(job, notifications);
+        job.addNotifications(notifications);
         throw new RuntimeException("Need to Enqueue");
     }
 }
