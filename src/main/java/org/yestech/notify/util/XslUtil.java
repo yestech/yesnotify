@@ -1,3 +1,11 @@
+/*
+ * Copyright LGPL3
+ * YES Technology Association
+ * http://yestech.org
+ *
+ * http://www.opensource.org/licenses/lgpl-3.0.html
+ */
+
 package org.yestech.notify.util;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
@@ -17,12 +25,12 @@ import java.io.File;
  * Utility Methods for XSL Templating.
  *
  */
-final public class XSLUtils {
+final public class XslUtil {
     public static final TransformerFactory TRANSFORMER_FACTORY = TransformerFactoryImpl.newInstance();
 
-    final private static Logger logger = LoggerFactory.getLogger(XSLUtils.class);
+    final private static Logger logger = LoggerFactory.getLogger(XslUtil.class);
 
-    private XSLUtils() {
+    private XslUtil() {
         super();
     }
 
@@ -38,7 +46,7 @@ final public class XSLUtils {
         try {
             StringWriter writer = new StringWriter();
             //TODO: cache the transformers!!!!!
-            Transformer transform = XSLUtils.TRANSFORMER_FACTORY.newTransformer(xslSource);
+            Transformer transform = XslUtil.TRANSFORMER_FACTORY.newTransformer(xslSource);
             transform.transform(xmlSource, new StreamResult(writer));
             return writer.toString();
         } catch (Exception e) {

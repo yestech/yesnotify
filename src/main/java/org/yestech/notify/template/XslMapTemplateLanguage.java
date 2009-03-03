@@ -14,7 +14,7 @@ import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
-import org.yestech.notify.util.XslUtils;
+import org.yestech.notify.util.XslUtil;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -72,7 +72,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
 
         Map nameValues = (Map) templateData.getData();
         String xslPath = templateData.getFilePath();
-        File xslFile = XslUtils.locateFileInApp(xslPath);
+        File xslFile = XslUtil.locateFileInApp(xslPath);
 
         Element element = new Element("email");
 
@@ -89,7 +89,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
         XMLOutputter xmlOut = new XMLOutputter();
         String document = xmlOut.outputString(doc);         //output the document to a string
         Reader docReader = new StringReader(document);      //create a reader for that string
-        templateMessage = XslUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
+        templateMessage = XslUtil.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
         return templateMessage;
     }
 }
