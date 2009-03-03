@@ -16,10 +16,10 @@ import java.util.HashSet;
 import java.util.UUID;
 
 /**
- * Default implementation of a {@link MutableNotification}.
+ * Default implementation of a {@link INotification}.
  *
  */
-public class DefaultNotification implements MutableNotification
+public class DefaultNotification implements INotification
 {
     final private static Logger logger = LoggerFactory.getLogger(DefaultNotification.class);
 

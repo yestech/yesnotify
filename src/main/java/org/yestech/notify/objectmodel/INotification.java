@@ -23,10 +23,12 @@ public interface INotification extends Serializable, Comparable<INotification> {
     /**
      * Return the {@link NotificationJob} this message is associated with.
      *
-     * @return The MailJob
+     * @return The NotificationJob
      */
     public INotificationJob getJob();
 
+    public void setJob(INotificationJob job);
+    
     /**
      * Return the {@link Sender} of the Message
      *
