@@ -1,3 +1,11 @@
+/*
+ * Copyright LGPL3
+ * YES Technology Association
+ * http://yestech.org
+ *
+ * http://www.opensource.org/licenses/lgpl-3.0.html
+ */
+
 package org.yestech.notify.model;
 
 import org.jdom.Document;
@@ -12,7 +20,7 @@ import org.yestech.notify.objectmodel.DefaultNotification;
 import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.template.*;
-import org.yestech.notify.util.XSLUtils;
+import org.yestech.notify.util.XslUtils;
 
 import java.util.Map;
 
@@ -36,7 +44,7 @@ public class XslMessageFactory extends BaseMessageFactory
                 XslTemplateData templateData = (XslTemplateData) getTemplateData();
 
                 SAXBuilder builder = new SAXBuilder();
-                Document doc = builder.build(XSLUtils.locateFileInApp(templateData.getFilePath()));
+                Document doc = builder.build(XslUtils.locateFileInApp(templateData.getFilePath()));
                 Namespace ns = Namespace.getNamespace("xsl", "http://www.w3.org/1999/XSL/Transform");
                 Element root = doc.getRootElement();
                 Element output = root.getChild("output", ns);

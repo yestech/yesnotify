@@ -1,3 +1,11 @@
+/*
+ * Copyright LGPL3
+ * YES Technology Association
+ * http://yestech.org
+ *
+ * http://www.opensource.org/licenses/lgpl-3.0.html
+ */
+
 package org.yestech.notify.template;
 
 import org.jdom.Document;
@@ -6,7 +14,7 @@ import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
-import org.yestech.notify.util.XSLUtils;
+import org.yestech.notify.util.XslUtils;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -64,7 +72,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
 
         Map nameValues = (Map) templateData.getData();
         String xslPath = templateData.getFilePath();
-        File xslFile = XSLUtils.locateFileInApp(xslPath);
+        File xslFile = XslUtils.locateFileInApp(xslPath);
 
         Element element = new Element("email");
 
@@ -81,7 +89,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
         XMLOutputter xmlOut = new XMLOutputter();
         String document = xmlOut.outputString(doc);         //output the document to a string
         Reader docReader = new StringReader(document);      //create a reader for that string
-        templateMessage = XSLUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
+        templateMessage = XslUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
         return templateMessage;
     }
 }
