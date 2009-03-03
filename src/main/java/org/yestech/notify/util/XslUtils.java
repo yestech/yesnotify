@@ -25,12 +25,12 @@ import java.io.File;
  * Utility Methods for XSL Templating.
  *
  */
-final public class XslUtil {
+final public class XslUtils {
     public static final TransformerFactory TRANSFORMER_FACTORY = TransformerFactoryImpl.newInstance();
 
-    final private static Logger logger = LoggerFactory.getLogger(XslUtil.class);
+    final private static Logger logger = LoggerFactory.getLogger(XslUtils.class);
 
-    private XslUtil() {
+    private XslUtils() {
         super();
     }
 
@@ -46,7 +46,7 @@ final public class XslUtil {
         try {
             StringWriter writer = new StringWriter();
             //TODO: cache the transformers!!!!!
-            Transformer transform = XslUtil.TRANSFORMER_FACTORY.newTransformer(xslSource);
+            Transformer transform = XslUtils.TRANSFORMER_FACTORY.newTransformer(xslSource);
             transform.transform(xmlSource, new StreamResult(writer));
             return writer.toString();
         } catch (Exception e) {

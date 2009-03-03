@@ -13,7 +13,7 @@ import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
-import org.yestech.notify.util.XslUtil;
+import org.yestech.notify.util.XslUtils;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -69,7 +69,7 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage {
 
         Document doc = (Document) templateData.getData();
         String xslPath = templateData.getFilePath();
-        File xslFile = XslUtil.locateFileInApp(xslPath);
+        File xslFile = XslUtils.locateFileInApp(xslPath);
 
         XMLOutputter xmlOut = new XMLOutputter();
         String document = xmlOut.outputString(doc);         //output the document to a string
@@ -79,7 +79,7 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage {
         }
         Reader docReader = new StringReader(document);      //create a reader for that string
         //need to convert the jdom document into something usuable
-        templateMessage = XslUtil.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
+        templateMessage = XslUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
         return templateMessage;
     }
 
