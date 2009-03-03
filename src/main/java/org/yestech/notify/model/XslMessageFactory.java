@@ -6,7 +6,7 @@ import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yestech.notify.constant.FormatEnum;
+import org.yestech.notify.constant.MessageTypeEnum;
 import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.objectmodel.DefaultNotification;
 import org.yestech.notify.objectmodel.IMessage;
@@ -20,16 +20,16 @@ import java.util.Map;
  * Factory to create a {@link org.yestech.notify.objectmodel.INotification} with XSL templating.
  *
  */
-public class XslNotificationFactory extends BaseNotificationFactory
+public class XslMessageFactory extends BaseMessageFactory
 {
-    final private static Logger logger = LoggerFactory.getLogger(XslNotificationFactory.class);
+    final private static Logger logger = LoggerFactory.getLogger(XslMessageFactory.class);
 
-    public XslNotificationFactory() {
+    public XslMessageFactory() {
         super();
     }
 
-    private FormatEnum getMessageTypeFromXslFile() {
-        FormatEnum type = getMessageType();
+    private MessageTypeEnum getMessageTypeFromXslFile() {
+        MessageTypeEnum type = getMessageType();
 
         if (type == null) {
             try {
@@ -40,7 +40,7 @@ public class XslNotificationFactory extends BaseNotificationFactory
                 Namespace ns = Namespace.getNamespace("xsl", "http://www.w3.org/1999/XSL/Transform");
                 Element root = doc.getRootElement();
                 Element output = root.getChild("output", ns);
-                type = FormatEnum.valueOf(output.getAttributeValue("method"));
+                type = MessageTypeEnum.valueOf(output.getAttributeValue("method"));
             } catch (Exception e) {
                 logger.error("Error Locating Message Type", e);
                 throw new RuntimeException("Error Locating Message Type", e);
@@ -53,11 +53,11 @@ public class XslNotificationFactory extends BaseNotificationFactory
         DefaultNotification notification = new DefaultNotification();
         notification.setSender(getSender());
 
-        IMessage message = createNotification();
+        IMessage message = createMessage();
         
-        FormatEnum type = getMessageTypeFromXslFile();
+        MessageTypeEnum type = getMessageTypeFromXslFile();
         message.setMessageType(type);
-        MimeTypeEnum mimeType = FormatEnum.HTML.equals(type) ? MimeTypeEnum.HTML : MimeTypeEnum.TEXT;
+        MimeTypeEnum mimeType = MessageTypeEnum.HTML.equals(type) ? MimeTypeEnum.HTML : MimeTypeEnum.TEXT;
 
         message.setMimeType(mimeType);
 
@@ -72,8 +72,8 @@ public class XslNotificationFactory extends BaseNotificationFactory
         return notification;
     }
 
-    private TemplateLanguage getLanguage() {
-        TemplateLanguage language = new NullTemplateLanguage();
+    private ITemplateLanguage getLanguage() {
+        ITemplateLanguage language = new NullTemplateLanguage();
         XslTemplateData templateData = (XslTemplateData) getTemplateData();
 
         if (templateData.getData() instanceof Map) {

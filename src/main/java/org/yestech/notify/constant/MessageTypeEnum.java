@@ -9,7 +9,7 @@ package org.yestech.notify.constant;
  * @author $Author: $
  * @version $Revision: $
  */
-public enum FormatEnum
+public enum MessageTypeEnum
 {
     HTML, TEXT
 }

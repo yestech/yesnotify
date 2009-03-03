@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A Template Language used to customize a {@link org.yestech.notify.objectmodel.Message}.
  *
  */
-public interface TemplateLanguage {
+public interface ITemplateLanguage {
 
     /**
      * Applies the Customization to the Message and returns the Custom Message.

@@ -1,6 +1,6 @@
 package org.yestech.notify.objectmodel;
 
-import org.yestech.notify.constant.FormatEnum;
+import org.yestech.notify.constant.MessageTypeEnum;
 import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.util.ArraySet;
 
@@ -15,14 +15,14 @@ public class Message implements IMessage
 {
     private String text;
     private Collection<Attachment> attachments;
-    private FormatEnum messageType;
+    private MessageTypeEnum messageType;
     private MimeTypeEnum mimeType;
     private String subject;
 
     public Message() {
         super();
         attachments = new ArraySet<Attachment>();
-        messageType = FormatEnum.TEXT;
+        messageType = MessageTypeEnum.TEXT;
         mimeType = MimeTypeEnum.TEXT;
     }
 
@@ -87,11 +87,11 @@ public class Message implements IMessage
         this.text = text;
     }
 
-    public FormatEnum getMessageType() {
+    public MessageTypeEnum getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(FormatEnum messageType) {
+    public void setMessageType(MessageTypeEnum messageType) {
         if (messageType != null) {
             this.messageType = messageType;
         }

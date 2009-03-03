@@ -8,10 +8,10 @@ import org.yestech.notify.template.NullTemplateLanguage;
  * Factory to create a {@link org.yestech.notify.objectmodel.INotification} with no op templating.
  *
  */
-public class DefaultNotificationFactory extends BaseNotificationFactory
+public class DefaultMessageFactory extends BaseMessageFactory
 {
 
-    public DefaultNotificationFactory() {
+    public DefaultMessageFactory() {
         super();
     }
 
@@ -19,7 +19,7 @@ public class DefaultNotificationFactory extends BaseNotificationFactory
         DefaultNotification notification = new DefaultNotification();
         notification.setSender(getSender());
 
-        notification.setMessage(createNotification());
+        notification.setMessage(createMessage());
 
         notification.addRecipients(getRecipients());
         notification.addCopyRecipients(getCopyRecipients());

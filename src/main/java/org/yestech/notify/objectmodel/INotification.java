@@ -1,6 +1,6 @@
 package org.yestech.notify.objectmodel;
 
-import org.yestech.notify.template.TemplateLanguage;
+import org.yestech.notify.template.ITemplateLanguage;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,11 +14,11 @@ public interface INotification extends Serializable, Comparable<INotification> {
     static final long serialVersionUID = 8897680828148707131L;
 
     /**
-     * Returns the {@link org.yestech.notify.template.TemplateLanguage} to apply.
+     * Returns the {@link org.yestech.notify.template.ITemplateLanguage} to apply.
      *
      * @return The Template
      */
-    public TemplateLanguage getTemplate();
+    public ITemplateLanguage getTemplate();
 
     /**
      * Return the {@link NotificationJob} this message is associated with.

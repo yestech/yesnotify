@@ -18,7 +18,7 @@ import java.io.StringReader;
  * An XSL based Template.
  *
  */
-public class XslXmlTemplateLanguage implements TemplateLanguage {
+public class XslXmlTemplateLanguage implements ITemplateLanguage {
     final private static Logger logger = LoggerFactory.getLogger(XslXmlTemplateLanguage.class);
 
     private XslTemplateData templateData;

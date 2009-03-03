@@ -1,6 +1,6 @@
 package org.yestech.notify.model;
 
-import org.yestech.notify.constant.FormatEnum;
+import org.yestech.notify.constant.MessageTypeEnum;
 import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.objectmodel.*;
 
@@ -12,7 +12,7 @@ import java.util.Collection;
  * Base Class Used to Create {@link org.yestech.notify.objectmodel.INotification}s.
  *
  */
-public abstract class BaseNotificationFactory
+public abstract class BaseMessageFactory
 {
     private ISender sender;
     private Collection<IRecipient> recipients;
@@ -22,10 +22,10 @@ public abstract class BaseNotificationFactory
     private Serializable templateData;
     private String subject;
     private Collection<String> attachments;
-    private FormatEnum messageType;
+    private MessageTypeEnum messageType;
     private MimeTypeEnum mimeType;
 
-    public BaseNotificationFactory() {
+    public BaseMessageFactory() {
         super();
         recipients = new ArrayList<IRecipient>();
         copyRecipients = new ArrayList<IRecipient>();
@@ -43,7 +43,7 @@ public abstract class BaseNotificationFactory
         return sender;
     }
 
-    public void addRecipient(Recipient recipient) {
+    public void addRecipient(IRecipient recipient) {
         if (recipient != null) {
             recipients.add(recipient);
         }
@@ -64,7 +64,7 @@ public abstract class BaseNotificationFactory
         return recipients;
     }
 
-    public void addCopyRecipient(Recipient copyRecipient) {
+    public void addCopyRecipient(IRecipient copyRecipient) {
         if (copyRecipient != null) {
             copyRecipients.add(copyRecipient);
         }
@@ -84,7 +84,7 @@ public abstract class BaseNotificationFactory
         copyRecipients.clear();
     }
 
-    public void addBlindRecipient(Recipient blindRecipient) {
+    public void addBlindRecipient(IRecipient blindRecipient) {
         if (blindRecipient != null) {
             blindRecipients.add(blindRecipient);
         }
@@ -147,11 +147,11 @@ public abstract class BaseNotificationFactory
             this.attachments.addAll(attachments);
         }
     }
-    protected FormatEnum getMessageType() {
+    protected MessageTypeEnum getMessageType() {
         return messageType;
     }
 
-    public void setNotificationType(FormatEnum messageType) {
+    public void setNotificationType(MessageTypeEnum messageType) {
         this.messageType = messageType;
     }
 
@@ -163,7 +163,7 @@ public abstract class BaseNotificationFactory
         this.mimeType = mimeType;
     }
 
-    protected IMessage createNotification() {
+    protected IMessage createMessage() {
         IMessage message = new Message();
         message.setText(getText());
         message.setSubject(getSubject());

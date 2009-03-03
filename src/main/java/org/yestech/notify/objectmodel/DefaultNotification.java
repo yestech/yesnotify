@@ -3,7 +3,7 @@ package org.yestech.notify.objectmodel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.template.NullTemplateLanguage;
-import org.yestech.notify.template.TemplateLanguage;
+import org.yestech.notify.template.ITemplateLanguage;
 import org.yestech.notify.util.Clazz;
 
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * Default implementation of a {@link MutableNotification}.
@@ -25,11 +26,11 @@ public class DefaultNotification implements MutableNotification
     static final long serialVersionUID = 8897680828148707131L;
 
     private ISender sender;
-    private INotificationJob job;
+    private UUID jobId;
     private Collection<IRecipient> recipients;
     private Collection<IRecipient> copyRecipients;
     private Collection<IRecipient> blindRecipients;
-    private transient TemplateLanguage template;
+    private transient ITemplateLanguage template;
     private IMessage message;
 
     public DefaultNotification() {
@@ -43,30 +44,30 @@ public class DefaultNotification implements MutableNotification
         if (job == null) {
             throw new NullPointerException("NotificationJob can't be null....");
         }
-        this.job = job;
+        this.jobId = job.getIdentifier();
     }
 
     /**
      * Return the {@link NotificationJob} this message is associated with.
      *
-     * @return The MailJob
+     * @return The INotificationJob
      */
     public INotificationJob getJob() {
-        return job;
+        return (jobId != null) ? new LightWeightNotificationJob(jobId) : null;
     }
 
-    public void setTemplate(TemplateLanguage template) {
+    public void setTemplate(ITemplateLanguage template) {
         if (template != null) {
             this.template = template;
         }
     }
 
     /**
-     * Returns the {@link org.yestech.notify.template.TemplateLanguage} to apply.
+     * Returns the {@link org.yestech.notify.template.ITemplateLanguage} to apply.
      *
      * @return The Template
      */
-    public TemplateLanguage getTemplate() {
+    public ITemplateLanguage getTemplate() {
         return template;
     }
 
@@ -92,7 +93,7 @@ public class DefaultNotification implements MutableNotification
         return Collections.unmodifiableCollection(recipients);
     }
 
-    public void addRecipient(Recipient recipient) {
+    public void addRecipient(IRecipient recipient) {
         if (recipient != null) {
             recipients.add(recipient);
         }
@@ -115,7 +116,7 @@ public class DefaultNotification implements MutableNotification
         return Collections.unmodifiableCollection(copyRecipients);
     }
 
-    public void addCopyRecipient(Recipient copyRecipient) {
+    public void addCopyRecipient(IRecipient copyRecipient) {
         if (copyRecipient != null) {
             copyRecipients.add(copyRecipient);
         }
@@ -204,8 +205,7 @@ public class DefaultNotification implements MutableNotification
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof DefaultNotification)) return false;
 
@@ -215,7 +215,7 @@ public class DefaultNotification implements MutableNotification
             return false;
         if (copyRecipients != null ? !copyRecipients.equals(that.copyRecipients) : that.copyRecipients != null)
             return false;
-        if (job != null ? !job.equals(that.job) : that.job != null) return false;
+        if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;
         if (message != null ? !message.equals(that.message) : that.message != null) return false;
         if (recipients != null ? !recipients.equals(that.recipients) : that.recipients != null) return false;
         if (sender != null ? !sender.equals(that.sender) : that.sender != null) return false;
@@ -225,10 +225,9 @@ public class DefaultNotification implements MutableNotification
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result = sender != null ? sender.hashCode() : 0;
-        result = 31 * result + (job != null ? job.hashCode() : 0);
+        result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
         result = 31 * result + (recipients != null ? recipients.hashCode() : 0);
         result = 31 * result + (copyRecipients != null ? copyRecipients.hashCode() : 0);
         result = 31 * result + (blindRecipients != null ? blindRecipients.hashCode() : 0);
@@ -238,17 +237,16 @@ public class DefaultNotification implements MutableNotification
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "DefaultNotification{" +
-               "sender=" + sender +
-               ", job=" + job +
-               ", recipients=" + recipients +
-               ", copyRecipients=" + copyRecipients +
-               ", blindRecipients=" + blindRecipients +
-               ", template=" + template +
-               ", message=" + message +
-               '}';
+                "sender=" + sender +
+                ", jobId=" + jobId +
+                ", recipients=" + recipients +
+                ", copyRecipients=" + copyRecipients +
+                ", blindRecipients=" + blindRecipients +
+                ", template=" + template +
+                ", message=" + message +
+                '}';
     }
 
     /**
@@ -301,12 +299,12 @@ public class DefaultNotification implements MutableNotification
         if (logger.isDebugEnabled()) {
             logger.debug("Reading template class name: " + className);
         }
-        template = (TemplateLanguage) Clazz.instantiateClass(className);
+        template = (ITemplateLanguage) Clazz.instantiateClass(className);
         template.setTemplateData(templateData);
     }
 
     public int compareTo(INotification o)
     {
-        return job.compareTo(o.getJob());
+        return jobId.compareTo(o.getJob().getIdentifier());
     }
 }

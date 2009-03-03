@@ -21,7 +21,7 @@ import java.util.Map;
  * A {@link java.util.Map} based Template.
  *
  */
-public class XslMapTemplateLanguage implements TemplateLanguage {
+public class XslMapTemplateLanguage implements ITemplateLanguage {
     final private static Logger logger = LoggerFactory.getLogger(XslMapTemplateLanguage.class);
 
     private XslTemplateData templateData;

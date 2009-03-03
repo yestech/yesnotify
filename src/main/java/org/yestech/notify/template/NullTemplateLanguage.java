@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A non op template.  It preforms no customization, just returns the original message
  *
  */
-public class NullTemplateLanguage implements TemplateLanguage {
+public class NullTemplateLanguage implements ITemplateLanguage {
     public NullTemplateLanguage() {
         super();
     }

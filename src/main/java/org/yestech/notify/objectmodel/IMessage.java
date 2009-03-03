@@ -5,7 +5,7 @@
  */
 package org.yestech.notify.objectmodel;
 
-import org.yestech.notify.constant.FormatEnum;
+import org.yestech.notify.constant.MessageTypeEnum;
 import org.yestech.notify.constant.MimeTypeEnum;
 
 import java.io.Serializable;
@@ -37,9 +37,9 @@ public interface IMessage extends Serializable
 
     void setText(String text);
 
-    FormatEnum getMessageType();
+    MessageTypeEnum getMessageType();
 
-    void setMessageType(FormatEnum messageType);
+    void setMessageType(MessageTypeEnum messageType);
 
     MimeTypeEnum getMimeType();
 
