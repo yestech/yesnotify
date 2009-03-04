@@ -10,6 +10,9 @@ package org.yestech.notify.objectmodel;
 
 
 import static com.google.common.collect.Lists.newArrayList;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -21,14 +24,22 @@ import java.util.UUID;
  * An Aggragate Class the contains {@link INotification}.
  *
  */
+@XStreamAlias("notificationJob")
 public class NotificationJob implements INotificationJob
 {
 
     static final long serialVersionUID = 8897680828148707131L;
 
+    @XStreamAlias("identifier")
+    @XStreamAsAttribute
     protected UUID identifier;
+
+    @XStreamImplicit(itemFieldName="message")
     protected Collection<INotification> messages;
 
+
+//    public NotificationJob() {
+//    }
 
     public NotificationJob(UUID identifier) {
         this.identifier = identifier;

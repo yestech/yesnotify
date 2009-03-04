@@ -8,13 +8,22 @@
 
 package org.yestech.notify.objectmodel;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 /**
  * Represents the sender of a {@link INotification}.
  */
+@XStreamAlias("sender")
 public class Sender implements ISender
 {
+    @XStreamAsAttribute
     private String emailAddress;
+
+    @XStreamAsAttribute
     private String replyAddress;
+
+    @XStreamAsAttribute
     private String displayName;
 
     public Sender()

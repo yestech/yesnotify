@@ -17,6 +17,7 @@ import java.util.Collection;
  * The AggregateNotification Job that gets sent and loaded.
  *
  */
+@Deprecated
 public class AggregateNotificationJob implements IAggregateNotificationJob
 {
     private DateTime sent;

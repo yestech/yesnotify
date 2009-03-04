@@ -23,22 +23,43 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.UUID;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 /**
  * Default implementation of a {@link INotification}.
  *
  */
+@XStreamAlias("notification")
 public class DefaultNotification implements INotification
 {
     final private static Logger logger = LoggerFactory.getLogger(DefaultNotification.class);
 
     static final long serialVersionUID = 8897680828148707131L;
 
+    @XStreamAlias("sender")
     private ISender sender;
+
+    @XStreamAlias("jobId")
+    @XStreamAsAttribute
     private UUID jobId;
+
+    @XStreamImplicit(itemFieldName = "recipient")
     private Collection<IRecipient> recipients;
+
+    @XStreamImplicit(itemFieldName = "copyRecipient")
     private Collection<IRecipient> copyRecipients;
+
+    @XStreamImplicit(itemFieldName = "blindRecipient")
     private Collection<IRecipient> blindRecipients;
+
+    @XStreamAlias("template")
+    @XStreamOmitField
     private transient ITemplateLanguage template;
+
+    @XStreamAlias("message")
     private IMessage message;
 
     public DefaultNotification() {

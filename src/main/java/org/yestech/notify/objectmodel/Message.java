@@ -15,16 +15,32 @@ import org.yestech.lib.lang.ArraySet;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 /**
  * A Physical Message that wants to be send.  It is contained in a {@link INotification}.
  *
  */
+@XStreamAlias("message")
 public class Message implements IMessage
 {
     private String text;
+
+    @XStreamImplicit(itemFieldName = "attachment")
     private Collection<Attachment> attachments;
+
+
+    @XStreamAlias("messageType")
+    @XStreamAsAttribute
     private MessageTypeEnum messageType;
+
+    @XStreamAlias("mimeType")
+    @XStreamAsAttribute
     private MimeTypeEnum mimeType;
+
+    @XStreamAsAttribute
     private String subject;
 
     public Message() {

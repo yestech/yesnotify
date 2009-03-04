@@ -8,14 +8,19 @@
 
 package org.yestech.notify.objectmodel;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+
 
 /**
  * A {@link Message} attachment that can be added.
  *
  */
+@XStreamAlias("attachement")
 public class Attachment implements IAttachment
 {
 
+    @XStreamAsAttribute
     private String fileName;
 
     public Attachment(String fileName) {

@@ -16,6 +16,7 @@ import org.yestech.notify.constant.StatusEnum;
  * This is a Recipient of a {@link AggregateNotificationJob}.
  *
  */
+@Deprecated
 public class AggregateNotificationRecipient implements IAggregateNotificationRecipient
 {
 

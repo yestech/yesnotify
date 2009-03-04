@@ -21,6 +21,7 @@ import java.io.Serializable;
  * @author $Author: $
  * @version $Revision: $
  */
+@Deprecated
 public interface IAggregateNotificationRecipient extends Serializable
 {
     String getEmail();

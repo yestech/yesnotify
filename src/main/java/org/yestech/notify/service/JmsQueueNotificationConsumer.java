@@ -17,32 +17,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.INotificationJob;
 
+import javax.jms.MessageListener;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
+import javax.jms.JMSException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author $Author: $
  * @version $Revision: $
  */
-public class JmsQueueNotificationConsumer implements INotificationConsumer {
+public class JmsQueueNotificationConsumer implements INotificationConsumer, MessageListener {
     final private static Logger logger = LoggerFactory.getLogger(JmsQueueNotificationConsumer.class);
 
-    private LinkedBlockingQueue<INotificationJob> queue;
-
-    public LinkedBlockingQueue<INotificationJob> getQueue() {
-        return queue;
-    }
-
-    public void setQueue(LinkedBlockingQueue<INotificationJob> queue) {
-        this.queue = queue;
+    public void onMessage(Message message) {
+        if (message instanceof ObjectMessage) {
+            ObjectMessage objMessage = (ObjectMessage) message;
+            INotificationJob job = null;
+            try {
+                job = (INotificationJob) objMessage.getObject();
+                recieve(job);
+            } catch (JMSException e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
     }
 
     public void recieve(INotificationJob notificationJob) {
-        while (true) {
-            try {
-                INotificationJob job = queue.take();
-            } catch (InterruptedException e) {
-                logger.error("error taking from queue", e);
-            }
-        }
+        System.out.println("job: " + notificationJob);
     }
 }

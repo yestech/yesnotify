@@ -12,10 +12,13 @@ import org.yestech.notify.objectmodel.IMessage;
 
 import java.io.Serializable;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * A non op template.  It preforms no customization, just returns the original message
  *
  */
+@XStreamAlias("nullTemplate")
 public class NullTemplateLanguage implements ITemplateLanguage {
     public NullTemplateLanguage() {
         super();

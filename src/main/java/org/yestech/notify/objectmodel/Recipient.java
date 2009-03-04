@@ -8,15 +8,22 @@
 
 package org.yestech.notify.objectmodel;
 
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 
 /**
  * Represents a Recipient of a Notification.
  *
  */
+@XStreamAlias("recipient")
 public class Recipient implements IRecipient
 {
 
+    @XStreamAsAttribute
     private String emailAddress;
+
+    @XStreamAsAttribute
     private String displayName;
 
 	public Recipient() {

@@ -22,6 +22,7 @@ import java.util.Collection;
  * @author $Author: $
  * @version $Revision: $
  */
+@Deprecated
 public interface IAggregateNotificationJob extends Serializable, Cloneable
 {
     String getCountryCode();

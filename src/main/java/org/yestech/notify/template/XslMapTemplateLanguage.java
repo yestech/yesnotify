@@ -25,10 +25,13 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * A {@link java.util.Map} based Template.
  *
  */
+@XStreamAlias("xslMapTemplate")
 public class XslMapTemplateLanguage implements ITemplateLanguage {
     final private static Logger logger = LoggerFactory.getLogger(XslMapTemplateLanguage.class);
 

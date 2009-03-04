@@ -22,10 +22,13 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * An XSL based Template.
  *
  */
+@XStreamAlias("xslXmlTemplate")
 public class XslXmlTemplateLanguage implements ITemplateLanguage {
     final private static Logger logger = LoggerFactory.getLogger(XslXmlTemplateLanguage.class);
 

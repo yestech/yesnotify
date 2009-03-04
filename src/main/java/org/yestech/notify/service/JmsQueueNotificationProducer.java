@@ -9,6 +9,8 @@
 package org.yestech.notify.service;
 
 import org.yestech.notify.objectmodel.INotificationJob;
+import org.yestech.lib.xml.XmlUtils;
+
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -44,11 +46,11 @@ public class JmsQueueNotificationProducer implements INotificationProducer {
         this.queue = queue;
     }
 
-    public void send(INotificationJob notificationJob) {
+    public void send(final INotificationJob notificationJob) {
         jmsTemplate.send(queue, new MessageCreator()
         {
             public Message createMessage(Session session) throws JMSException {
-                return null;
+                return session.createObjectMessage(notificationJob);
             }
         });
 
