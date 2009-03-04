@@ -14,7 +14,7 @@ import org.jdom.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
-import org.yestech.notify.util.XslUtils;
+import org.yestech.lib.xml.XslUtils;
 
 import javax.xml.transform.stream.StreamSource;
 

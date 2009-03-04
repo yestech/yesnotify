@@ -10,7 +10,7 @@ package org.yestech.notify.objectmodel;
 
 import org.yestech.notify.constant.MessageTypeEnum;
 import org.yestech.notify.constant.MimeTypeEnum;
-import org.yestech.notify.util.ArraySet;
+import org.yestech.lib.lang.ArraySet;
 
 import java.util.Collection;
 import java.util.Collections;

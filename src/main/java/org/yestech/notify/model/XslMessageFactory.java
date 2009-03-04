@@ -20,7 +20,7 @@ import org.yestech.notify.objectmodel.DefaultNotification;
 import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.template.*;
-import org.yestech.notify.util.XslUtils;
+import org.yestech.lib.xml.XslUtils;
 
 import java.util.Map;
 

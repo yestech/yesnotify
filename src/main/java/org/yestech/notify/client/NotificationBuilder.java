@@ -19,7 +19,7 @@ import org.yestech.notify.model.XslMessageFactory;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.objectmodel.IRecipient;
 import org.yestech.notify.objectmodel.ISender;
-import org.yestech.notify.util.Clazz;
+import org.yestech.lib.lang.Clazz;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -54,77 +54,95 @@ public class NotificationBuilder {
         super();
     }
 
-    public void setSubject(String subject) {
+    public NotificationBuilder setSubject(String subject) {
         messageFactory.setSubject(subject);
+        return this;
     }
 
-    public void addAttachment(String attachment) {
+    public NotificationBuilder addAttachment(String attachment) {
         messageFactory.addAttachment(attachment);
+        return this;
     }
 
-    public void addAttachments(Collection<String> attachments) {
+    public NotificationBuilder addAttachments(Collection<String> attachments) {
         messageFactory.addAttachments(attachments);
+        return this;
     }
 
-    public void clearAttachments() {
+    public NotificationBuilder clearAttachments() {
         messageFactory.clearAttachments();
+        return this;
     }
 
-    public void setMessageType(MessageTypeEnum notificationType) {
+    public NotificationBuilder setMessageType(MessageTypeEnum notificationType) {
         messageFactory.setNotificationType(notificationType);
+        return this;
     }
 
-    public void setMimeType(MimeTypeEnum mimeType) {
+    public NotificationBuilder setMimeType(MimeTypeEnum mimeType) {
         messageFactory.setMimeType(mimeType);
+        return this;
     }
 
-    public void setSender(ISender sender) {
+    public NotificationBuilder setSender(ISender sender) {
         messageFactory.setSender(sender);
+        return this;
     }
 
-    public void addRecipient(IRecipient recipient) {
+    public NotificationBuilder addRecipient(IRecipient recipient) {
         messageFactory.addRecipient(recipient);
+        return this;
     }
 
-    public void clearRecipients() {
+    public NotificationBuilder clearRecipients() {
         messageFactory.clearRecipients();
+        return this;
     }
 
-    public void addRecipients(Collection<IRecipient> recipients) {
+    public NotificationBuilder addRecipients(Collection<IRecipient> recipients) {
         messageFactory.addRecipients(recipients);
+        return this;
     }
 
-    public void addCopyRecipient(IRecipient copyRecipient) {
+    public NotificationBuilder addCopyRecipient(IRecipient copyRecipient) {
         messageFactory.addCopyRecipient(copyRecipient);
+        return this;
     }
 
-    public void addCopyRecipients(Collection<IRecipient> copyRecipients) {
+    public NotificationBuilder addCopyRecipients(Collection<IRecipient> copyRecipients) {
         messageFactory.addCopyRecipients(copyRecipients);
+        return this;
     }
 
-    public void clearCopyRecipients() {
+    public NotificationBuilder clearCopyRecipients() {
         messageFactory.clearCopyRecipients();
+        return this;
     }
 
 
-    public void addBlindRecipient(IRecipient blindRecipient) {
+    public NotificationBuilder addBlindRecipient(IRecipient blindRecipient) {
         messageFactory.addBlindRecipient(blindRecipient);
+        return this;
     }
 
-    public void addBlindRecipients(Collection<IRecipient> blindRecipients) {
+    public NotificationBuilder addBlindRecipients(Collection<IRecipient> blindRecipients) {
         messageFactory.addBlindRecipients(blindRecipients);
+        return this;
     }
 
-    public void clearBlindRecipients() {
+    public NotificationBuilder clearBlindRecipients() {
         messageFactory.clearBlindRecipients();
+        return this;
     }
 
-    public void setText(String text) {
+    public NotificationBuilder setText(String text) {
         messageFactory.setText(text);
+        return this;
     }
 
-    public void setTemplateData(Serializable templateData) {
+    public NotificationBuilder setTemplateData(Serializable templateData) {
         messageFactory.setTemplateData(templateData);
+        return this;
     }
 
     /**

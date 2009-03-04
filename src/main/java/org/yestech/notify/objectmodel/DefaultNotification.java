@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.template.NullTemplateLanguage;
 import org.yestech.notify.template.ITemplateLanguage;
-import org.yestech.notify.util.Clazz;
+import org.yestech.lib.lang.Clazz;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
