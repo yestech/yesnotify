@@ -32,6 +32,33 @@ import static org.yestech.notify.util.Factory.createSender;
 public class NotificationBuilderIntegrationTest {
   
     @Test
+    public void testChainBuilder() {
+        NotificationBuilder builder = NotificationBuilder.getBuilder();
+        assertNotNull(builder);
+        String subject = "test subject";
+        String text = "this is the text";
+        String attachment = "attch1";
+        ISender sender = createSender();
+        builder.setSubject(subject).setMimeType(MimeTypeEnum.TEXT).setMessageType(MessageTypeEnum.HTML);
+        builder.setText(text).setSender(sender).addRecipient(createRecipient("1")).addRecipient(createRecipient("2"));
+        builder.addRecipient(createRecipient("3")).addCopyRecipient(createRecipient("4")).addCopyRecipient(createRecipient("5"));
+        builder.addBlindRecipient(createRecipient("6")).addBlindRecipient(createRecipient("7")).addBlindRecipient(createRecipient("8"));
+        builder.addBlindRecipient(createRecipient("9")).addAttachment(attachment);
+        INotification notification = builder.createNotification();
+        assertNotNull(notification);
+        assertEquals(4, notification.blindRecipientSize());
+        assertEquals(3, notification.recipientSize());
+        assertEquals(2, notification.copyRecipientSize());
+        IMessage message = notification.getMessage();
+        assertEquals(1, message.getAttachments().size());
+        assertEquals(attachment, message.getAttachments().iterator().next());
+        assertEquals(text, message.getText());
+        assertEquals(subject, message.getSubject());
+        assertEquals(MimeTypeEnum.TEXT, message.getMimeType());
+        assertEquals(MessageTypeEnum.HTML, message.getMessageType());
+    }
+
+    @Test
     public void testBuilder() {
         NotificationBuilder builder = NotificationBuilder.getBuilder();
         assertNotNull(builder);
