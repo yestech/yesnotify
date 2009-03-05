@@ -38,7 +38,7 @@ public class NotificationBuilderIntegrationTest {
         String text = "this is the text";
         String attachment = "attch1";
         ISender sender = createSender();
-        builder.setSubject(subject).setMimeType(MimeTypeEnum.TEXT).setMessageType(MessageTypeEnum.HTML);
+        builder.setSubject(subject).setMessageType(MessageTypeEnum.HTML_EMAIL);
         builder.setText(text).setSender(sender).addRecipient(createRecipient("1")).addRecipient(createRecipient("2"));
         builder.addRecipient(createRecipient("3")).addCopyRecipient(createRecipient("4")).addCopyRecipient(createRecipient("5"));
         builder.addBlindRecipient(createRecipient("6")).addBlindRecipient(createRecipient("7")).addBlindRecipient(createRecipient("8"));
@@ -53,8 +53,7 @@ public class NotificationBuilderIntegrationTest {
         assertEquals(attachment, message.getAttachments().iterator().next());
         assertEquals(text, message.getText());
         assertEquals(subject, message.getSubject());
-        assertEquals(MimeTypeEnum.TEXT, message.getMimeType());
-        assertEquals(MessageTypeEnum.HTML, message.getMessageType());
+        assertEquals(MessageTypeEnum.HTML_EMAIL, message.getMessageType());
     }
 
     @Test
@@ -63,8 +62,7 @@ public class NotificationBuilderIntegrationTest {
         assertNotNull(builder);
         String subject = "test subject";
         builder.setSubject(subject);
-        builder.setMimeType(MimeTypeEnum.TEXT);
-        builder.setMessageType(MessageTypeEnum.HTML);
+        builder.setMessageType(MessageTypeEnum.HTML_EMAIL);
         String text = "this is the text";
         builder.setText(text);
         ISender sender = createSender();
@@ -90,8 +88,7 @@ public class NotificationBuilderIntegrationTest {
         assertEquals(attachment, message.getAttachments().iterator().next());
         assertEquals(text, message.getText());
         assertEquals(subject, message.getSubject());
-        assertEquals(MimeTypeEnum.TEXT, message.getMimeType());
-        assertEquals(MessageTypeEnum.HTML, message.getMessageType());
+        assertEquals(MessageTypeEnum.HTML_EMAIL, message.getMessageType());
     }
 
     @Test
@@ -100,8 +97,7 @@ public class NotificationBuilderIntegrationTest {
         assertNotNull(builder);
         String subject = "test subject";
         builder.setSubject(subject);
-        builder.setMimeType(MimeTypeEnum.TEXT);
-        builder.setMessageType(MessageTypeEnum.HTML);
+        builder.setMessageType(MessageTypeEnum.TEXT_EMAIL);
         String text = "this is the text";
         builder.setText(text);
         ISender sender = createSender();
@@ -128,16 +124,14 @@ public class NotificationBuilderIntegrationTest {
         assertEquals(attachment, message.getAttachments().iterator().next());
         assertEquals(text, message.getText());
         assertEquals(subject, message.getSubject());
-        assertEquals(MimeTypeEnum.TEXT, message.getMimeType());
-        assertEquals(MessageTypeEnum.HTML, message.getMessageType());
+        assertEquals(MessageTypeEnum.TEXT_EMAIL, message.getMessageType());
 
         builder.clearBlindRecipients();
         builder.clearCopyRecipients();
         builder.clearAttachments();
         builder.addRecipient(createRecipient("5"));
         builder.addRecipient(createRecipient("6"));
-        builder.setMimeType(MimeTypeEnum.HTML);
-        builder.setMessageType(MessageTypeEnum.TEXT);
+        builder.setMessageType(MessageTypeEnum.MULTIPART_EMAIL);
         INotification notification2 = builder.createNotification();
         assertNotNull(notification2);
         assertEquals(0, notification2.copyRecipientSize());
@@ -148,8 +142,7 @@ public class NotificationBuilderIntegrationTest {
         assertEquals(0, message2.getAttachments().size());
         assertEquals(text, message2.getText());
         assertEquals(subject, message2.getSubject());
-        assertEquals(MimeTypeEnum.HTML, message2.getMimeType());
-        assertEquals(MessageTypeEnum.TEXT, message2.getMessageType());
+        assertEquals(MessageTypeEnum.MULTIPART_EMAIL, message2.getMessageType());
     }
 
     @Test
@@ -171,8 +164,7 @@ public class NotificationBuilderIntegrationTest {
         assertNotNull(message);
         assertNull(message.getText());
         assertNull(message.getSubject());
-        assertEquals(MimeTypeEnum.TEXT, message.getMimeType());
-        assertEquals(MessageTypeEnum.TEXT, message.getMessageType());
+        assertEquals(MessageTypeEnum.TEXT_EMAIL, message.getMessageType());
         assertTrue(message.isAttachmentEmpty());
     }
 
