@@ -13,8 +13,8 @@
  */
 package org.yestech.notify.objectmodel;
 
+import org.yestech.notify.constant.IMessageType;
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -48,8 +48,4 @@ public interface IMessage extends Serializable
     MessageTypeEnum getMessageType();
 
     void setMessageType(MessageTypeEnum messageType);
-
-    MimeTypeEnum getMimeType();
-
-    void setMimeType(MimeTypeEnum mimeType);
 }

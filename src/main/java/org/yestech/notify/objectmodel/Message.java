@@ -9,7 +9,6 @@
 package org.yestech.notify.objectmodel;
 
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.lib.lang.ArraySet;
 
 import java.util.Collection;
@@ -36,18 +35,13 @@ public class Message implements IMessage
     @XStreamAsAttribute
     private MessageTypeEnum messageType;
 
-    @XStreamAlias("mimeType")
-    @XStreamAsAttribute
-    private MimeTypeEnum mimeType;
-
     @XStreamAsAttribute
     private String subject;
 
     public Message() {
         super();
         attachments = new ArraySet<Attachment>();
-        messageType = MessageTypeEnum.TEXT;
-        mimeType = MimeTypeEnum.TEXT;
+        messageType = MessageTypeEnum.TEXT_EMAIL;
     }
 
     public void addAttachments(Collection attachments) {
@@ -121,16 +115,6 @@ public class Message implements IMessage
         }
     }
 
-    public MimeTypeEnum getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(MimeTypeEnum mimeType) {
-        if (mimeType != null) {
-             this.mimeType = mimeType;
-        }
-    }
-
     @Override
     public boolean equals(Object o)
     {
@@ -141,7 +125,6 @@ public class Message implements IMessage
 
         if (attachments != null ? !attachments.equals(that.attachments) : that.attachments != null) return false;
         if (messageType != that.messageType) return false;
-        if (mimeType != that.mimeType) return false;
         if (subject != null ? !subject.equals(that.subject) : that.subject != null) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
@@ -154,7 +137,6 @@ public class Message implements IMessage
         int result = text != null ? text.hashCode() : 0;
         result = 31 * result + (attachments != null ? attachments.hashCode() : 0);
         result = 31 * result + (messageType != null ? messageType.hashCode() : 0);
-        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         return result;
     }
@@ -166,7 +148,6 @@ public class Message implements IMessage
                "text='" + text + '\'' +
                ", attachments=" + attachments +
                ", messageType=" + messageType +
-               ", mimeType=" + mimeType +
                ", subject='" + subject + '\'' +
                '}';
     }

@@ -17,7 +17,7 @@ package org.yestech.notify.constant;
  * @author $Author: $
  * @version $Revision: $
  */
-public enum MessageTypeEnum
+public enum MessageTypeEnum implements IMessageType
 {
-    HTML, TEXT
+    HTML_EMAIL, TEXT_EMAIL, MULTIPART_EMAIL
 }

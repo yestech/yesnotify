@@ -11,7 +11,7 @@
  * Original Author:  Artie Copeland
  * Last Modified Date: $DateTime: $
  */
-package org.yestech.notify.util;
+package org.yestech.notify.factory;
 
 import org.yestech.notify.objectmodel.ISender;
 import org.yestech.notify.objectmodel.Sender;
@@ -22,8 +22,8 @@ import org.yestech.notify.objectmodel.Recipient;
  * @author $Author: $
  * @version $Revision: $
  */
-public class Factory {
-    private Factory() {
+public class ObjectFactory {
+    private ObjectFactory() {
 
     }
 

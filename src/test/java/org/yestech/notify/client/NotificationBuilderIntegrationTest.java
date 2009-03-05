@@ -17,13 +17,12 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.objectmodel.INotificationJob;
 import org.yestech.notify.objectmodel.ISender;
-import static org.yestech.notify.util.Factory.createRecipient;
-import static org.yestech.notify.util.Factory.createSender;
+import static org.yestech.notify.factory.ObjectFactory.createRecipient;
+import static org.yestech.notify.factory.ObjectFactory.createSender;
 
 /**
  * @author $Author: $

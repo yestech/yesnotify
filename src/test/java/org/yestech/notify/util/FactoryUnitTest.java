@@ -17,8 +17,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
 import org.yestech.notify.objectmodel.ISender;
 import org.yestech.notify.objectmodel.IRecipient;
-import static org.yestech.notify.util.Factory.createSender;
-import static org.yestech.notify.util.Factory.createRecipient;
+import static org.yestech.notify.factory.ObjectFactory.createSender;
+import static org.yestech.notify.factory.ObjectFactory.createRecipient;
 
 /**
  * @author $Author: $

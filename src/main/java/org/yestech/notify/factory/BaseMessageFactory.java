@@ -6,11 +6,11 @@
  * http://www.opensource.org/licenses/lgpl-3.0.html
  */
 
-package org.yestech.notify.model;
+package org.yestech.notify.factory;
 
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.objectmodel.*;
+import org.yestech.notify.template.ITemplateLanguage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public abstract class BaseMessageFactory
     private String subject;
     private Collection<String> attachments;
     private MessageTypeEnum messageType;
-    private MimeTypeEnum mimeType;
+    private ITemplateLanguage templateLanguage;
 
     public BaseMessageFactory() {
         super();
@@ -163,21 +163,20 @@ public abstract class BaseMessageFactory
         this.messageType = messageType;
     }
 
-    protected MimeTypeEnum getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(MimeTypeEnum mimeType) {
-        this.mimeType = mimeType;
-    }
-
     protected IMessage createMessage() {
         IMessage message = new Message();
         message.setText(getText());
         message.setSubject(getSubject());
         message.setMessageType(getMessageType());
-        message.setMimeType(getMimeType());
         message.addAttachments(getAttachments());
         return message;
+    }
+
+    public void setTemplateLanguage(ITemplateLanguage templateLanguage) {
+        this.templateLanguage = templateLanguage;
+    }
+
+    public ITemplateLanguage getTemplateLanguage() {
+        return templateLanguage;
     }
 }

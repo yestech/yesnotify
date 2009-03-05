@@ -17,7 +17,5 @@ package org.yestech.notify.constant;
  * @author $Author: $
  * @version $Revision: $
  */
-public enum MimeTypeEnum
-{
-    HTML, TEXT
+public interface IMessageType {
 }

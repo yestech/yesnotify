@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/lgpl-3.0.html
  */
 
-package org.yestech.notify.model;
+package org.yestech.notify.factory;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -15,14 +15,11 @@ import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
 import org.yestech.notify.objectmodel.DefaultNotification;
 import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.template.*;
 import org.yestech.lib.xml.XslUtils;
-
-import java.util.Map;
 
 /**
  * Factory to create a {@link org.yestech.notify.objectmodel.INotification} with XSL templating.
@@ -65,31 +62,14 @@ public class XslMessageFactory extends BaseMessageFactory
         
         MessageTypeEnum type = getMessageTypeFromXslFile();
         message.setMessageType(type);
-        MimeTypeEnum mimeType = MessageTypeEnum.HTML.equals(type) ? MimeTypeEnum.HTML : MimeTypeEnum.TEXT;
-
-        message.setMimeType(mimeType);
-
         notification.setMessage(message);
 
         notification.addRecipients(getRecipients());
         notification.addCopyRecipients(getCopyRecipients());
         notification.addBlindCopyRecipients(getBlindRecipients());
 
-        notification.setTemplate(getLanguage());
+        notification.setTemplate(getTemplateLanguage());
 
         return notification;
-    }
-
-    private ITemplateLanguage getLanguage() {
-        ITemplateLanguage language = new NullTemplateLanguage();
-        XslTemplateData templateData = (XslTemplateData) getTemplateData();
-
-        if (templateData.getData() instanceof Map) {
-            language = new XslMapTemplateLanguage(templateData);
-        } else {
-            language = new XslXmlTemplateLanguage(templateData);
-        }
-
-        return language;
     }
 }

@@ -11,20 +11,24 @@ package org.yestech.notify.client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.constant.MimeTypeEnum;
-import org.yestech.notify.constant.TemplateLanguageEnum;
-import org.yestech.notify.model.DefaultMessageFactory;
-import org.yestech.notify.model.BaseMessageFactory;
-import org.yestech.notify.model.XslMessageFactory;
+import org.yestech.notify.factory.DefaultMessageFactory;
+import org.yestech.notify.factory.BaseMessageFactory;
+import org.yestech.notify.factory.XslMessageFactory;
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.objectmodel.IRecipient;
 import org.yestech.notify.objectmodel.ISender;
+import org.yestech.notify.template.ITemplateLanguage;
+import org.yestech.notify.template.NullTemplateLanguage;
+import org.yestech.notify.template.XslXmlTemplateLanguage;
+import org.yestech.notify.template.XslMapTemplateLanguage;
 import org.yestech.lib.lang.Clazz;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.google.common.collect.Maps.newHashMap;
 
 /**
  * Builder used for creating concrete {@link org.yestech.notify.objectmodel.INotification}.
@@ -34,20 +38,28 @@ public class NotificationBuilder {
 
     private BaseMessageFactory messageFactory;
 
-    private static Map<TemplateLanguageEnum, Class> notificationFactories;
+    private static Map<Class<? extends ITemplateLanguage>, Class<? extends BaseMessageFactory>> notificationFactories = newHashMap();
 
     static {
-        //load templates
-        notificationFactories = new HashMap<TemplateLanguageEnum, Class>();
+        //load default custom templates
+        notificationFactories = new HashMap<Class<? extends ITemplateLanguage>, Class<? extends BaseMessageFactory>>();
 
-        notificationFactories.put(TemplateLanguageEnum.XSL_XML,
+        notificationFactories.put(XslXmlTemplateLanguage.class,
                 XslMessageFactory.class);
 
-        notificationFactories.put(TemplateLanguageEnum.XSL_MAP,
+        notificationFactories.put(XslMapTemplateLanguage.class,
                 XslMessageFactory.class);
+    }
 
-        notificationFactories.put(TemplateLanguageEnum.NULL,
-                DefaultMessageFactory.class);
+    public static Map<Class<? extends ITemplateLanguage>, Class<? extends BaseMessageFactory>> getNotificationFactories() {
+        return notificationFactories;
+    }
+
+    public static void setNotificationFactories(Map<Class<? extends ITemplateLanguage>, Class<? extends BaseMessageFactory>> notificationFactories) {
+        for (Map.Entry<Class<? extends ITemplateLanguage>, Class<? extends BaseMessageFactory>> classClassEntry : notificationFactories.entrySet()) {
+            NotificationBuilder.notificationFactories.put(classClassEntry.getKey(),
+                    classClassEntry.getValue());
+        }
     }
 
     private NotificationBuilder() {
@@ -76,11 +88,6 @@ public class NotificationBuilder {
 
     public NotificationBuilder setMessageType(MessageTypeEnum notificationType) {
         messageFactory.setNotificationType(notificationType);
-        return this;
-    }
-
-    public NotificationBuilder setMimeType(MimeTypeEnum mimeType) {
-        messageFactory.setMimeType(mimeType);
         return this;
     }
 
@@ -169,13 +176,17 @@ public class NotificationBuilder {
     }
 
     public static NotificationBuilder getBuilder() {
-        return getBuilder(TemplateLanguageEnum.NULL);
+        return getBuilder(new NullTemplateLanguage());
     }
 
-    public static NotificationBuilder getBuilder(TemplateLanguageEnum templateLanguage) {
+    public static NotificationBuilder getBuilder(ITemplateLanguage templateLanguage) {
         NotificationBuilder builder = new NotificationBuilder();
-        Class factoryClass = notificationFactories.get(templateLanguage);
-        builder.messageFactory = (BaseMessageFactory) Clazz.instantiateClass(factoryClass);
+        Class<? extends BaseMessageFactory> factoryClass = notificationFactories.get(templateLanguage.getClass());
+        if (factoryClass == null) {
+            factoryClass = DefaultMessageFactory.class;
+        }
+        builder.messageFactory = Clazz.instantiateClass(factoryClass);
+        builder.messageFactory.setTemplateLanguage(templateLanguage);
         return builder;
     }
 }

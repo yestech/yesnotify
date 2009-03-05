@@ -11,13 +11,15 @@
  * Original Author:  Artie Copeland
  * Last Modified Date: $DateTime: $
  */
-package org.yestech.notify.constant;
+package org.yestech.notify.deliver;
+
+import org.yestech.notify.objectmodel.INotification;
 
 /**
  * @author $Author: $
  * @version $Revision: $
  */
-public enum TemplateLanguageEnum
-{
-    XSL_XML, XSL_MAP, NULL
+public interface INotificationDelivery {
+
+    public void deliver(INotification notification);
 }

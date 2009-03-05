@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * This class provides convienece methods for validating a
- * {@link org.yestech.notify.objectmodel.IAggregateNotificationJob}.
+ * This class provides convienece methods.
  *
  */
 final public class NotificationUtils
@@ -66,55 +65,4 @@ final public class NotificationUtils
         return recipients;
     }
 
-    public static void initialCheck(IAggregateNotificationJob job) {
-        if (job == null
-                || job.getSender() == null
-                || job.getSubject() == null
-                || ((job.getPlainPart() == null || job.getPlainPart().equals(""))
-                && (job.getHtmlPart() == null || job.getHtmlPart().equals("")))) {
-            logger.error("notification job [" + job + "] not in a valid state to notify");
-            throw new RuntimeException(
-                    "notification job [" + job + "] not in a valid state to notify");
-        }
-
-        // if the job has been delivered, bail out of sending again
-        if (job.getStage().equals(StageEnum.DELIVER)) {
-            logger.error(
-                    "job was already sent once to the real delivery list ["
-                    + job
-                    + "]");
-            throw new RuntimeException(
-                    "job was already sent once to the real delivery list ["
-                    + job
-                    + "]");
-        }
-    }
-
-
-    /**
-     * Converts a Collection of {@link IRecipient} to {@link IAggregateNotificationRecipient} so they can be blasted
-     *
-     * @param recipients IRecipients to convert
-     * @return A Collection of IAggregateNotificationRecipient
-     */
-    public static Collection<IAggregateNotificationRecipient> convertRecipientToAggregateNotificationRecipient(Collection<IRecipient> recipients, long jobId) {
-        ArrayList<IAggregateNotificationRecipient> convertedRecipients = new ArrayList<IAggregateNotificationRecipient>();
-        if (recipients == null) {
-            logger.error("Recipients can be null...");
-            throw new NullPointerException("Recipients can be null...");
-        }
-
-        for (IRecipient recipient : recipients)
-        {
-            AggregateNotificationRecipient aggregateNotificationRecipient = new AggregateNotificationRecipient();
-            aggregateNotificationRecipient.setUserId(-1L);
-            aggregateNotificationRecipient.setNotificationJobId(jobId);
-            aggregateNotificationRecipient.setEmail(recipient.getEmailAddress());
-            aggregateNotificationRecipient.setStatus(StatusEnum.SENT);
-            aggregateNotificationRecipient.setAttributes("A tester");
-            convertedRecipients.add(aggregateNotificationRecipient);
-        }
-
-        return convertedRecipients;
-    }
 }
