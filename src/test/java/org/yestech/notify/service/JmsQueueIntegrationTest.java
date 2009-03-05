@@ -16,6 +16,7 @@ package org.yestech.notify.service;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,6 +44,9 @@ public class JmsQueueIntegrationTest {
 
     @Test
     public void setSending100Messages() {
+        TestProcessor processor = new TestProcessor();
+        consumer.setProcessor(processor);
+
         for (int i = 0; i < 100; i++) {
             INotificationJob job = new NotificationJob(UUID.randomUUID());
             job.addNotification(new DefaultNotification());
@@ -55,14 +59,34 @@ public class JmsQueueIntegrationTest {
             job.addNotification(new DefaultNotification());
             job.addNotification(new DefaultNotification());
             job.addNotification(new DefaultNotification());
-            producer.send(job);            
+            producer.send(job);
         }
-        
+
+        assertTrue(processor.isCalled());
 //        final INotificationJob notificationJob = context.mock(INotificationJob.class, "notificationJob");
 //        context.checking(new Expectations(){{
 //            oneOf(notificationJob).
 //        }});
 //        producer.send(notificationJob);
 
+    }
+
+    private class TestProcessor implements INotificationProcessor {
+        boolean called;
+
+        private TestProcessor() {
+        }
+
+        public boolean isCalled() {
+            return called;
+        }
+
+        public void setCalled(boolean called) {
+            this.called = called;
+        }
+
+        public void process(INotificationJob notificationJob) {
+            called = true;
+        }
     }
 }
