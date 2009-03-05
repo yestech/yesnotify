@@ -26,6 +26,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MemoryQueueNotificationConsumer implements INotificationConsumer {
     final private static Logger logger = LoggerFactory.getLogger(MemoryQueueNotificationConsumer.class);
     
+    private INotificationProcessor processor;
+
+    public INotificationProcessor getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(INotificationProcessor processor) {
+        this.processor = processor;
+    }
+
     private LinkedBlockingQueue<INotificationJob> queue;
 
     public LinkedBlockingQueue<INotificationJob> getQueue() {
@@ -37,11 +47,13 @@ public class MemoryQueueNotificationConsumer implements INotificationConsumer {
     }
 
     public void recieve(INotificationJob notificationJob) {
-        while (true) {
-            try {
-                INotificationJob job = queue.take();
-            } catch (InterruptedException e) {
-                logger.error("error taking from queue", e);
-            }
-        }
-    }}
+//        while (true) {
+//            try {
+//                INotificationJob job = queue.take();
+//            } catch (InterruptedException e) {
+//                logger.error("error taking from queue", e);
+//            }
+//        }
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+}

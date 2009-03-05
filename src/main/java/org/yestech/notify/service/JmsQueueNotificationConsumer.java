@@ -30,6 +30,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class JmsQueueNotificationConsumer implements INotificationConsumer, MessageListener {
     final private static Logger logger = LoggerFactory.getLogger(JmsQueueNotificationConsumer.class);
 
+    private INotificationProcessor processor;
+
+    public INotificationProcessor getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(INotificationProcessor processor) {
+        this.processor = processor;
+    }
+
     public void onMessage(Message message) {
         if (message instanceof ObjectMessage) {
             ObjectMessage objMessage = (ObjectMessage) message;
@@ -44,6 +54,6 @@ public class JmsQueueNotificationConsumer implements INotificationConsumer, Mess
     }
 
     public void recieve(INotificationJob notificationJob) {
-        System.out.println("job: " + notificationJob);
+        processor.process(notificationJob);
     }
 }
