@@ -123,20 +123,18 @@ public class DefaultNotification implements INotification {
 
     public void addRecipient(IRecipient recipient) {
         if (recipient != null) {
-            initializeSet(recipients);
+            if (this.recipients == null) {
+                this.recipients = new HashSet<IRecipient>();
+            }
             recipients.add(recipient);
-        }
-    }
-
-    private void initializeSet(Collection<IRecipient> recipients) {
-        if (recipients == null) {
-            recipients = new HashSet<IRecipient>();
         }
     }
 
     public void addRecipients(Collection<IRecipient> recipients) {
         if (recipients != null && !recipients.isEmpty()) {
-            initializeSet(this.recipients);
+            if (this.recipients == null) {
+                this.recipients = new HashSet<IRecipient>();
+            }
             this.recipients.addAll(recipients);
         }
     }
@@ -157,14 +155,18 @@ public class DefaultNotification implements INotification {
 
     public void addCopyRecipient(IRecipient copyRecipient) {
         if (copyRecipient != null) {
-            initializeSet(copyRecipients);
+            if (this.copyRecipients == null) {
+                this.copyRecipients = new HashSet<IRecipient>();
+            }
             copyRecipients.add(copyRecipient);
         }
     }
 
     public void addCopyRecipients(Collection<IRecipient> copyRecipients) {
         if (copyRecipients != null && !copyRecipients.isEmpty()) {
-            initializeSet(this.copyRecipients);
+            if (this.copyRecipients == null) {
+                this.copyRecipients = new HashSet<IRecipient>();
+            }
             this.copyRecipients.addAll(copyRecipients);
         }
     }
@@ -184,14 +186,18 @@ public class DefaultNotification implements INotification {
 
     public void addBlindCopyRecipient(Recipient blindRecipient) {
         if (blindRecipient != null) {
-            initializeSet(blindRecipients);
+            if (this.blindRecipients == null) {
+                this.blindRecipients = new HashSet<IRecipient>();
+            }
             blindRecipients.add(blindRecipient);
         }
     }
 
     public void addBlindCopyRecipients(Collection<IRecipient> blindRecipients) {
         if (blindRecipients != null && !blindRecipients.isEmpty()) {
-            initializeSet(this.blindRecipients);
+            if (this.blindRecipients == null) {
+                this.blindRecipients = new HashSet<IRecipient>();
+            }
             this.blindRecipients.addAll(blindRecipients);
         }
     }
