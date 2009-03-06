@@ -8,33 +8,30 @@
 
 package org.yestech.notify.objectmodel;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yestech.notify.template.NullTemplateLanguage;
-import org.yestech.notify.template.ITemplateLanguage;
 import org.yestech.lib.lang.Clazz;
+import org.yestech.notify.template.ITemplateLanguage;
+import org.yestech.notify.template.NullTemplateLanguage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
+import static java.util.Collections.unmodifiableCollection;
 import java.util.HashSet;
 import java.util.UUID;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-
 /**
  * Default implementation of a {@link INotification}.
- *
  */
 @XStreamAlias("notification")
-public class DefaultNotification implements INotification
-{
+public class DefaultNotification implements INotification {
     final private static Logger logger = LoggerFactory.getLogger(DefaultNotification.class);
 
     static final long serialVersionUID = 8897680828148707131L;
@@ -63,10 +60,6 @@ public class DefaultNotification implements INotification
     private IMessage message;
 
     public DefaultNotification() {
-        template = new NullTemplateLanguage();
-        recipients = new HashSet<IRecipient>();
-        copyRecipients = new HashSet<IRecipient>();
-        blindRecipients = new HashSet<IRecipient>();
     }
 
     public void setJob(INotificationJob job) {
@@ -97,6 +90,9 @@ public class DefaultNotification implements INotification
      * @return The Template
      */
     public ITemplateLanguage getTemplate() {
+        if (template == null) {
+            return new NullTemplateLanguage();
+        }
         return template;
     }
 
@@ -119,17 +115,28 @@ public class DefaultNotification implements INotification
      * @return The Recipients
      */
     public Collection<IRecipient> getRecipients() {
-        return Collections.unmodifiableCollection(recipients);
+        if (recipients == null) {
+            return unmodifiableCollection(new HashSet<IRecipient>());
+        }
+        return unmodifiableCollection(recipients);
     }
 
     public void addRecipient(IRecipient recipient) {
         if (recipient != null) {
+            initializeSet(recipients);
             recipients.add(recipient);
+        }
+    }
+
+    private void initializeSet(Collection<IRecipient> recipients) {
+        if (recipients == null) {
+            recipients = new HashSet<IRecipient>();
         }
     }
 
     public void addRecipients(Collection<IRecipient> recipients) {
         if (recipients != null && !recipients.isEmpty()) {
+            initializeSet(this.recipients);
             this.recipients.addAll(recipients);
         }
     }
@@ -142,17 +149,22 @@ public class DefaultNotification implements INotification
      * @return The Recipients
      */
     public Collection<IRecipient> getCopyRecipients() {
-        return Collections.unmodifiableCollection(copyRecipients);
+        if (copyRecipients == null) {
+            return unmodifiableCollection(new HashSet<IRecipient>());
+        }
+        return unmodifiableCollection(copyRecipients);
     }
 
     public void addCopyRecipient(IRecipient copyRecipient) {
         if (copyRecipient != null) {
+            initializeSet(copyRecipients);
             copyRecipients.add(copyRecipient);
         }
     }
 
     public void addCopyRecipients(Collection<IRecipient> copyRecipients) {
         if (copyRecipients != null && !copyRecipients.isEmpty()) {
+            initializeSet(this.copyRecipients);
             this.copyRecipients.addAll(copyRecipients);
         }
     }
@@ -164,17 +176,22 @@ public class DefaultNotification implements INotification
      * @return The Recipients
      */
     public Collection<IRecipient> getBlindCopyRecipients() {
-        return Collections.unmodifiableCollection(blindRecipients);
+        if (blindRecipients == null) {
+            return unmodifiableCollection(new HashSet<IRecipient>());
+        }
+        return unmodifiableCollection(blindRecipients);
     }
 
     public void addBlindCopyRecipient(Recipient blindRecipient) {
         if (blindRecipient != null) {
+            initializeSet(blindRecipients);
             blindRecipients.add(blindRecipient);
         }
     }
 
     public void addBlindCopyRecipients(Collection<IRecipient> blindRecipients) {
         if (blindRecipients != null && !blindRecipients.isEmpty()) {
+            initializeSet(this.blindRecipients);
             this.blindRecipients.addAll(blindRecipients);
         }
     }
@@ -185,7 +202,7 @@ public class DefaultNotification implements INotification
      * @return Count of recipients
      */
     public int recipientSize() {
-        return recipients.size();
+        return recipients == null ? 0 : recipients.size();
     }
 
     /**
@@ -194,7 +211,7 @@ public class DefaultNotification implements INotification
      * @return Count of copy recipients
      */
     public int copyRecipientSize() {
-        return copyRecipients.size();
+        return copyRecipients == null ? 0 : copyRecipients.size();
     }
 
     /**
@@ -203,7 +220,7 @@ public class DefaultNotification implements INotification
      * @return Count of blind copy recipients
      */
     public int blindRecipientSize() {
-        return blindRecipients.size();
+        return blindRecipients == null ? 0 : blindRecipients.size();
     }
 
     /**
@@ -291,12 +308,13 @@ public class DefaultNotification implements INotification
         s.defaultWriteObject();
 
         //add the class name of the Template language
-        String className = template.getClass().getName();
+        ITemplateLanguage templateLanguage = getTemplate();
+        String className = templateLanguage.getClass().getName();
         if (logger.isDebugEnabled()) {
             logger.debug("Writing template class name: " + className);
         }
         s.writeUTF(className);
-        s.writeObject(template.getTemplateData());
+        s.writeObject(templateLanguage.getTemplateData());
     }
 
     /**
@@ -332,8 +350,7 @@ public class DefaultNotification implements INotification
         template.setTemplateData(templateData);
     }
 
-    public int compareTo(INotification o)
-    {
+    public int compareTo(INotification o) {
         return jobId.compareTo(o.getJob().getIdentifier());
     }
 }
