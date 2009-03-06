@@ -33,23 +33,7 @@ import static com.google.common.collect.Lists.newArrayList;
 public class TextEmailDelivery extends EmailDelivery {
     final private static Logger logger = LoggerFactory.getLogger(TextEmailDelivery.class);
 
-    public void deliver(INotification notification) {
-        try {
-            sendToReciepients(notification);
-            sendToCcReciepients(notification);
-            sendToBccReciepients(notification);
-        } catch (EmailException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
-
-    private void sendToReciepients(INotification notification) throws EmailException {
-        for (IRecipient recipient : notification.getRecipients()) {
-            sendMessage(notification, recipient);
-        }
-    }
-
-    private void sendMessage(INotification notification, IRecipient recipient) throws EmailException {
+    protected void sendMessage(INotification notification, IRecipient recipient) throws EmailException {
         SimpleEmail email = new SimpleEmail();
         email.setHostName(getEmailHost());
         ISender sender = notification.getSender();
@@ -63,16 +47,5 @@ public class TextEmailDelivery extends EmailDelivery {
         String appliedMessage = template.apply(notification.getMessage());
         email.setMsg(appliedMessage);
         email.send();
-    }
-
-    private void sendToCcReciepients(INotification notification) throws EmailException {
-        for (IRecipient recipient : notification.getCopyRecipients()) {
-            sendMessage(notification, recipient);
-        }
-    }
-    private void sendToBccReciepients(INotification notification) throws EmailException {
-        for (IRecipient recipient : notification.getBlindCopyRecipients()) {
-            sendMessage(notification, recipient);
-        }
     }
 }

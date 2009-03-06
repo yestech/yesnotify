@@ -13,12 +13,17 @@
  */
 package org.yestech.notify.deliver;
 
-import org.yestech.notify.constant.MessageTypeEnum;
-import org.yestech.notify.objectmodel.INotification;
-import org.apache.commons.mail.HtmlEmail;
+import static com.google.common.collect.Lists.newArrayList;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yestech.notify.constant.MessageTypeEnum;
+import org.yestech.notify.objectmodel.INotification;
+import org.yestech.notify.objectmodel.IRecipient;
+import org.yestech.notify.objectmodel.ISender;
+import org.yestech.notify.template.ITemplateLanguage;
 
 /**
  * @author $Author: $
@@ -28,29 +33,21 @@ import org.slf4j.LoggerFactory;
 public class HtmlEmailDelivery extends EmailDelivery {
     final private static Logger logger = LoggerFactory.getLogger(HtmlEmailDelivery.class);
 
-    public void deliver(INotification notification) {
-        try {
-            // Create the email message
-            HtmlEmail email = new HtmlEmail();
-            email.setHostName("mail.myserver.com");
-            email.addTo("jdoe@somewhere.org", "John Doe");
-            email.setFrom("me@apache.org", "Me");
-            email.setSubject("");
-
-            // embed the image and get the content id
-//        URL url = new URL("http://www.apache.org/images/asf_logo_wide.gif");
-//        String cid = email.embed(url, "Apache logo");
-
-            // set the html message
-//        email.setHtmlMsg("<html>The apache logo - <img src=\"cid:"+cid+"\"></html>");
-
-            // set the alternative message
-//        email.setTextMsg("Your email client does not support HTML messages");
-
-            // send the email
-            email.send();
-        } catch (EmailException e) {
-            logger.error(e.getMessage(), e);
+    protected void sendMessage(INotification notification, IRecipient recipient) throws EmailException {
+        // Create the email message
+        HtmlEmail email = new HtmlEmail();
+        email.setHostName(getEmailHost());
+        ISender sender = notification.getSender();
+        email.setFrom(sender.getEmailAddress(), sender.getDisplayName());
+        if (StringUtils.isNotBlank(sender.getReplyAddress())) {
+            email.setReplyTo(newArrayList(sender.getReplyAddress()));
         }
+        email.setSubject(notification.getMessage().getSubject());
+        email.addTo(recipient.getEmailAddress(), recipient.getDisplayName());
+        ITemplateLanguage template = notification.getTemplate();
+        String appliedMessage = template.apply(notification.getMessage());
+        email.setHtmlMsg(appliedMessage);
+        email.send();
     }
+
 }
