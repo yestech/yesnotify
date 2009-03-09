@@ -40,7 +40,7 @@ public class HtmlEmailDelivery extends EmailDelivery {
         ISender sender = notification.getSender();
         email.setFrom(sender.getEmailAddress(), sender.getDisplayName());
         if (StringUtils.isNotBlank(sender.getReplyAddress())) {
-            email.setReplyTo(newArrayList(sender.getReplyAddress()));
+            email.addReplyTo(sender.getReplyAddress());
         }
         email.setSubject(notification.getMessage().getSubject());
         email.addTo(recipient.getEmailAddress(), recipient.getDisplayName());
