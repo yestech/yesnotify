@@ -54,7 +54,7 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     /**
      * Applies the Customization to the Message and returns the Custom Message.
      * <br/>
-     * The raw {@link IMessage} is set to key: notificationMessage
+     * The raw {@link IMessage} is set to key: yesnotify_notification_message
      * <br/>
      * each entry in the template data is set to the key supplied.
      *
@@ -64,7 +64,7 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     public String apply(IMessage message) {
         StringWriter writer = new StringWriter();
         try {
-            context.put("notificationMessage", message);
+            context.put("yesnotify_notification_message", message);
             for (Map.Entry<String, Object> entry : templateData.getData().entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
