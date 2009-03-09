@@ -43,6 +43,6 @@ public class NullTemplateLanguage implements ITemplateLanguage<NullTemplateLangu
 
     @Override
     public NullTemplateLanguagePersistence getPersistence() {
-        return null;
+        return new NullTemplateLanguagePersistence();
     }
 }
