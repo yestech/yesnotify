@@ -22,7 +22,8 @@ import java.io.Serializable;
  * @version $Revision: $
  */
 public class NullTemplateLanguagePersistence implements ITemplateLanguagePersistence<String> {
-
+    private static final long serialVersionUID = 4456953920956635949L;
+    
     @Override
     public void setData(String data) {
     }

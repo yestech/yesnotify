@@ -18,6 +18,7 @@ import java.util.HashMap;
  */
 final public class VelocityTemplateLanguagePersistence implements ITemplateLanguagePersistence<HashMap<String, Object>> {
 
+    private static final long serialVersionUID = 4456953920956635949L;
     private HashMap<String, Object> data;
     private String filePath;
 

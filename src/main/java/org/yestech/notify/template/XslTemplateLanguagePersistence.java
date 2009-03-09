@@ -18,6 +18,7 @@ import java.util.HashMap;
  *
  */
 final public class XslTemplateLanguagePersistence implements ITemplateLanguagePersistence<Serializable> {
+    private static final long serialVersionUID = 4456953920956635949L;
 
     private Serializable data;
     private String filePath;
