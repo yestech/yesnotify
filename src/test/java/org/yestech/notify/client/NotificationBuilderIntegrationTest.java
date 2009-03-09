@@ -32,7 +32,7 @@ public class NotificationBuilderIntegrationTest {
   
     @Test
     public void testChainBuilder() {
-        NotificationBuilder builder = NotificationBuilder.getBuilder();
+        INotificationBuilder builder = NotificationBuilder.getBuilder();
         assertNotNull(builder);
         String subject = "test subject";
         String text = "this is the text";
@@ -58,7 +58,7 @@ public class NotificationBuilderIntegrationTest {
 
     @Test
     public void testBuilder() {
-        NotificationBuilder builder = NotificationBuilder.getBuilder();
+        INotificationBuilder builder = NotificationBuilder.getBuilder();
         assertNotNull(builder);
         String subject = "test subject";
         builder.setSubject(subject);
@@ -93,7 +93,7 @@ public class NotificationBuilderIntegrationTest {
 
     @Test
     public void testReuseBuilder() {
-        NotificationBuilder builder = NotificationBuilder.getBuilder();
+        INotificationBuilder builder = NotificationBuilder.getBuilder();
         assertNotNull(builder);
         String subject = "test subject";
         builder.setSubject(subject);
@@ -147,7 +147,7 @@ public class NotificationBuilderIntegrationTest {
 
     @Test
     public void testDefaultBuilder() {
-        NotificationBuilder builder = NotificationBuilder.getBuilder();
+        INotificationBuilder builder = NotificationBuilder.getBuilder();
         assertNotNull(builder);
         INotification notification = builder.createNotification();
         assertNotNull(notification);

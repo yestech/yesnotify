@@ -33,7 +33,7 @@ import static com.google.common.collect.Maps.newHashMap;
 /**
  * Builder used for creating concrete {@link org.yestech.notify.objectmodel.INotification}.
  */
-public class NotificationBuilder {
+public class NotificationBuilder implements INotificationBuilder {
     final private static Logger logger = LoggerFactory.getLogger(NotificationBuilder.class);
 
     private BaseMessageFactory messageFactory;
@@ -66,88 +66,88 @@ public class NotificationBuilder {
         super();
     }
 
-    public NotificationBuilder setSubject(String subject) {
+    public INotificationBuilder setSubject(String subject) {
         messageFactory.setSubject(subject);
         return this;
     }
 
-    public NotificationBuilder addAttachment(String attachment) {
+    public INotificationBuilder addAttachment(String attachment) {
         messageFactory.addAttachment(attachment);
         return this;
     }
 
-    public NotificationBuilder addAttachments(Collection<String> attachments) {
+    public INotificationBuilder addAttachments(Collection<String> attachments) {
         messageFactory.addAttachments(attachments);
         return this;
     }
 
-    public NotificationBuilder clearAttachments() {
+    public INotificationBuilder clearAttachments() {
         messageFactory.clearAttachments();
         return this;
     }
 
-    public NotificationBuilder setMessageType(MessageTypeEnum notificationType) {
+    public INotificationBuilder setMessageType(MessageTypeEnum notificationType) {
         messageFactory.setNotificationType(notificationType);
         return this;
     }
 
-    public NotificationBuilder setSender(ISender sender) {
+    public INotificationBuilder setSender(ISender sender) {
         messageFactory.setSender(sender);
         return this;
     }
 
-    public NotificationBuilder addRecipient(IRecipient recipient) {
+    public INotificationBuilder addRecipient(IRecipient recipient) {
         messageFactory.addRecipient(recipient);
         return this;
     }
 
-    public NotificationBuilder clearRecipients() {
+    public INotificationBuilder clearRecipients() {
         messageFactory.clearRecipients();
         return this;
     }
 
-    public NotificationBuilder addRecipients(Collection<IRecipient> recipients) {
+    public INotificationBuilder addRecipients(Collection<IRecipient> recipients) {
         messageFactory.addRecipients(recipients);
         return this;
     }
 
-    public NotificationBuilder addCopyRecipient(IRecipient copyRecipient) {
+    public INotificationBuilder addCopyRecipient(IRecipient copyRecipient) {
         messageFactory.addCopyRecipient(copyRecipient);
         return this;
     }
 
-    public NotificationBuilder addCopyRecipients(Collection<IRecipient> copyRecipients) {
+    public INotificationBuilder addCopyRecipients(Collection<IRecipient> copyRecipients) {
         messageFactory.addCopyRecipients(copyRecipients);
         return this;
     }
 
-    public NotificationBuilder clearCopyRecipients() {
+    public INotificationBuilder clearCopyRecipients() {
         messageFactory.clearCopyRecipients();
         return this;
     }
 
 
-    public NotificationBuilder addBlindRecipient(IRecipient blindRecipient) {
+    public INotificationBuilder addBlindRecipient(IRecipient blindRecipient) {
         messageFactory.addBlindRecipient(blindRecipient);
         return this;
     }
 
-    public NotificationBuilder addBlindRecipients(Collection<IRecipient> blindRecipients) {
+    public INotificationBuilder addBlindRecipients(Collection<IRecipient> blindRecipients) {
         messageFactory.addBlindRecipients(blindRecipients);
         return this;
     }
 
-    public NotificationBuilder clearBlindRecipients() {
+    public INotificationBuilder clearBlindRecipients() {
         messageFactory.clearBlindRecipients();
         return this;
     }
 
-    public NotificationBuilder setText(String text) {
+    public INotificationBuilder setText(String text) {
         messageFactory.setText(text);
         return this;
     }
 
-    public NotificationBuilder setTemplateData(Serializable templateData) {
+    public INotificationBuilder setTemplateData(Serializable templateData) {
         messageFactory.setTemplateData(templateData);
         return this;
     }
@@ -175,11 +175,11 @@ public class NotificationBuilder {
         messageFactory.setText("");
     }
 
-    public static NotificationBuilder getBuilder() {
+    public static INotificationBuilder getBuilder() {
         return getBuilder(new NullTemplateLanguage());
     }
 
-    public static NotificationBuilder getBuilder(ITemplateLanguage templateLanguage) {
+    public static INotificationBuilder getBuilder(ITemplateLanguage templateLanguage) {
         NotificationBuilder builder = new NotificationBuilder();
         Class<? extends BaseMessageFactory> factoryClass = notificationFactories.get(templateLanguage.getClass());
         if (factoryClass == null) {

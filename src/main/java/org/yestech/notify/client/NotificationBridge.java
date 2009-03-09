@@ -20,7 +20,7 @@ import java.util.UUID;
 /**
  * The Bridge to send a Nofitication.
  */
-public class NotificationBridge {
+public class NotificationBridge implements INotificationBridge {
 
     private INotificationProducer producer;
 
