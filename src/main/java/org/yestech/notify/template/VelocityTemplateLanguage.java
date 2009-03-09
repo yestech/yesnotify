@@ -69,8 +69,10 @@ public class VelocityTemplateLanguage implements ITemplateLanguage {
         StringWriter writer = new StringWriter();
         try {
             context.put("notification.message", message);
-            ve.setProperty(
-                    VelocityEngine.RUNTIME_LOG_LOGSYSTEM, this);
+            ve.setProperty("resource.loader","class"); 
+            ve.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"); 
+//            ve.setProperty(
+//                    VelocityEngine.RUNTIME_LOG_LOGSYSTEM, logger);
             ve.init();
             Template t = ve.getTemplate(templateFile);
             t.merge(context, writer);
