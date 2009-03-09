@@ -36,6 +36,7 @@ public class HtmlEmailDelivery extends EmailDelivery {
     protected void sendMessage(INotification notification, IRecipient recipient) throws EmailException {
         // Create the email message
         HtmlEmail email = new HtmlEmail();
+        enableAuthenticator(email);
         email.setHostName(getEmailHost());
         ISender sender = notification.getSender();
         email.setFrom(sender.getEmailAddress(), sender.getDisplayName());

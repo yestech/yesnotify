@@ -35,6 +35,7 @@ public class TextEmailDelivery extends EmailDelivery {
 
     protected void sendMessage(INotification notification, IRecipient recipient) throws EmailException {
         SimpleEmail email = new SimpleEmail();
+        enableAuthenticator(email);
         email.setHostName(getEmailHost());
         ISender sender = notification.getSender();
         email.setFrom(sender.getEmailAddress(), sender.getDisplayName());
