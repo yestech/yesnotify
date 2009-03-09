@@ -63,8 +63,10 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
         StringWriter writer = new StringWriter();
         try {
             context.put("notification.message", message);
-            context.put("notification.template.params", templateData.getData());
-            ve.setProperty("resource.loader","class"); 
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                context.put(entry.getKey(), entry.getValue());
+            }
+            ve.setProperty("resource.loader","class");
             ve.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"); 
             ve.init();
             Template t = ve.getTemplate(templateData.getFilePath());
