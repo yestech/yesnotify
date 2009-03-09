@@ -11,20 +11,21 @@ package org.yestech.notify.template;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Used to persist the internal of {@link org.yestech.notify.template.VelocityTemplateLanguage}
  */
-final public class VelocityTemplateLanguagePersistence implements ITemplateLanguagePersistence {
+final public class VelocityTemplateLanguagePersistence implements ITemplateLanguagePersistence<HashMap<String, Object>> {
 
-    private Serializable data;
+    private HashMap<String, Object> data;
     private String filePath;
 
     public VelocityTemplateLanguagePersistence() {
         super();
     }
 
-    public Serializable getData() {
+    public HashMap<String, Object> getData() {
         return data;
     }
 
@@ -32,7 +33,7 @@ final public class VelocityTemplateLanguagePersistence implements ITemplateLangu
         return filePath;
     }
 
-    public void setData(Serializable data) {
+    public void setData(HashMap<String, Object> data) {
         this.data = data;
     }
 

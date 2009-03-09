@@ -41,7 +41,7 @@ public class VelocityTemplateLanguageUnitTest {
     @Test
     public void testApply() {
         IMessage message = context.mock(IMessage.class, "message");
-        HashMap<String, String> templateData = newHashMap();
+        HashMap<String, Object> templateData = newHashMap();
         templateData.put("test1", "values");
         templateData.put("second", "another");
         VelocityTemplateLanguagePersistence internal = new VelocityTemplateLanguagePersistence();

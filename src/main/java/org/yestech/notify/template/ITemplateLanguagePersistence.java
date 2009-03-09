@@ -21,5 +21,18 @@ import java.io.Serializable;
  * @author Artie Copeland
  * @version $Revision: $
  */
-public interface ITemplateLanguagePersistence extends Serializable {
+public interface ITemplateLanguagePersistence<D extends Serializable> extends Serializable {
+
+    /**
+     * Set some data to use when applying a message
+     *
+     * @param data
+     */
+    public void setData(D data);
+
+    /**
+     * Return the data to use when applying a message
+     * @return data to use when applying a message
+     */
+    public D getData();
 }

@@ -8,17 +8,13 @@
 
 package org.yestech.notify.template;
 
-import org.yestech.notify.objectmodel.IMessage;
 import org.springframework.beans.factory.annotation.Required;
-
-import java.io.Serializable;
-import java.io.Externalizable;
+import org.yestech.notify.objectmodel.IMessage;
 
 /**
  * A Template Language used to customize a {@link org.yestech.notify.objectmodel.Message}.
- *
  */
-public interface ITemplateLanguage<P extends Serializable, D extends Serializable> {
+public interface ITemplateLanguage<P extends ITemplateLanguagePersistence> {
 
     /**
      * Applies the Customization to the Message and returns the Custom Message.
@@ -28,19 +24,6 @@ public interface ITemplateLanguage<P extends Serializable, D extends Serializabl
      */
     public String apply(IMessage message);
 
-    /**
-     * Set some data to use when applying a message
-     *
-     * @param data
-     */
-    public void setData(D data);
-
-    /**
-     * Return the data to use when applying a message
-     * @return data to use when applying a message
-     */
-    public D getData();
-    
     /**
      * <b>ONLY</b> used for Deserialization!!!!!!!
      *

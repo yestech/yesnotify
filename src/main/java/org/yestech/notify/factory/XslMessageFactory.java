@@ -69,7 +69,7 @@ public class XslMessageFactory extends BaseMessageFactory
         notification.addBlindCopyRecipients(getBlindRecipients());
         
         ITemplateLanguage template = getTemplateLanguage();
-        template.setData(getTemplateData());
+        template.getPersistence().setData(getTemplateData());
 
         notification.setTemplate(template);
 

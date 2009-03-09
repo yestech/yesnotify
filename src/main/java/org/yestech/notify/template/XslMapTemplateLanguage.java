@@ -32,11 +32,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslMapTemplate")
-public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence, HashMap<String, String>> {
+public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(XslMapTemplateLanguage.class);
 
     private XslTemplateLanguagePersistence templateData;
-    private HashMap<String, String> data;
 
     public XslMapTemplateLanguage() {
         super();
@@ -97,13 +96,4 @@ public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLang
         return templateMessage;
     }
 
-    @Override
-    public void setData(HashMap<String, String> data) {
-        this.data = data;
-    }
-
-    @Override
-    public HashMap<String, String> getData() {
-        return data;
-    }
 }

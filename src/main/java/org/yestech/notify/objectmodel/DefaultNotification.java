@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.yestech.lib.lang.Clazz;
 import org.yestech.notify.template.ITemplateLanguage;
 import org.yestech.notify.template.NullTemplateLanguage;
+import org.yestech.notify.template.ITemplateLanguagePersistence;
 
 import java.io.*;
 import java.util.Collection;
@@ -338,9 +339,9 @@ public class DefaultNotification implements INotification {
 
         //load template class
         String className = s.readUTF();
-        Serializable templateData = null;
+        ITemplateLanguagePersistence templateData = null;
         try {
-            templateData = (Serializable) s.readObject();
+            templateData = (ITemplateLanguagePersistence) s.readObject();
         } catch (Exception e) {
             logger.error("Error Restoring Template Data...", e);
             throw new RuntimeException("Error Restoring Template Data...", e);

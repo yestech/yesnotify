@@ -22,7 +22,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("nullTemplate")
-public class NullTemplateLanguage implements ITemplateLanguage<String, String> {
+public class NullTemplateLanguage implements ITemplateLanguage<NullTemplateLanguagePersistence> {
     public NullTemplateLanguage() {
         super();
     }
@@ -38,20 +38,11 @@ public class NullTemplateLanguage implements ITemplateLanguage<String, String> {
     }
 
     @Override
-    public void setData(String data) {
+    public void setPersistence(NullTemplateLanguagePersistence persistence) {
     }
 
     @Override
-    public String getData() {
-        return "";
-    }
-
-    @Override
-    public void setPersistence(String persistence) {
-    }
-
-    @Override
-    public String getPersistence() {
-        return "";
+    public NullTemplateLanguagePersistence getPersistence() {
+        return null;
     }
 }

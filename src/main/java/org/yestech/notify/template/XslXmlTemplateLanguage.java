@@ -28,11 +28,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslXmlTemplate")
-public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence, String> {
+public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(XslXmlTemplateLanguage.class);
 
     private XslTemplateLanguagePersistence templateData;
-    private String data;
 
     public XslXmlTemplateLanguage() {
         super();
@@ -84,15 +83,5 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLang
         //need to convert the jdom document into something usuable
         templateMessage = XslUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
         return templateMessage;
-    }
-
-    @Override
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    @Override
-    public String getData() {
-        return data;
     }
 }

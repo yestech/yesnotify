@@ -24,12 +24,11 @@ import java.util.HashMap;
  * A non op template.  It preforms no customization, just returns the original message
  */
 @XStreamAlias("velocityTemplate")
-public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence, HashMap<String, Object>> {
+public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(VelocityTemplateLanguage.class);
     private VelocityEngine ve;
     private VelocityContext context;
     private VelocityTemplateLanguagePersistence templateData;
-    private HashMap<String, Object> data;
 
     public VelocityTemplateLanguage() {
         super();
@@ -63,7 +62,7 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
         StringWriter writer = new StringWriter();
         try {
             context.put("notification.message", message);
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
+            for (Map.Entry<String, Object> entry : templateData.getData().entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
             ve.setProperty("resource.loader","class");
@@ -86,15 +85,5 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     @Override
     public VelocityTemplateLanguagePersistence getPersistence() {
         return templateData;
-    }
-
-    @Override
-    public void setData(HashMap<String, Object> data) {
-        this.data = data;
-    }
-
-    @Override
-    public HashMap<String, Object> getData() {
-        return data;
     }
 }

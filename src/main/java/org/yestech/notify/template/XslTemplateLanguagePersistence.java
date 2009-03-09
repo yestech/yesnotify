@@ -11,12 +11,13 @@ package org.yestech.notify.template;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Used to persist the internal of XSL based {@link ITemplateLanguage}
  *
  */
-final public class XslTemplateLanguagePersistence implements ITemplateLanguagePersistence {
+final public class XslTemplateLanguagePersistence implements ITemplateLanguagePersistence<Serializable> {
 
     private Serializable data;
     private String filePath;
