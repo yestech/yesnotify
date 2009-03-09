@@ -91,4 +91,13 @@ public class Sender implements ISender
     {
         return emailAddress.compareTo(o.getEmailAddress());
     }
+
+    @Override
+    public String toString() {
+        return "Sender{" +
+                "emailAddress='" + emailAddress + '\'' +
+                ", replyAddress='" + replyAddress + '\'' +
+                ", displayName='" + displayName + '\'' +
+                '}';
+    }
 }
