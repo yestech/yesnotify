@@ -28,10 +28,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslXmlTemplate")
-public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
+public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence, String> {
     final private static Logger logger = LoggerFactory.getLogger(XslXmlTemplateLanguage.class);
 
     private XslTemplateLanguagePersistence templateData;
+    private String data;
 
     public XslXmlTemplateLanguage() {
         super();
@@ -47,7 +48,7 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLang
      *
      * @param data Template Data to use.
      */
-    public void setTemplateData(XslTemplateLanguagePersistence data) {
+    public void setPersistence(XslTemplateLanguagePersistence data) {
         templateData = data;
     }
 
@@ -56,7 +57,7 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLang
      *
      * @return The Template Data to use.
      */
-    public XslTemplateLanguagePersistence getTemplateData() {
+    public XslTemplateLanguagePersistence getPersistence() {
         return templateData;
     }
 
@@ -85,4 +86,13 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLang
         return templateMessage;
     }
 
+    @Override
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    @Override
+    public String getData() {
+        return data;
+    }
 }

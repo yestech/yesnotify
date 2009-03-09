@@ -22,7 +22,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("nullTemplate")
-public class NullTemplateLanguage implements ITemplateLanguage<Serializable> {
+public class NullTemplateLanguage implements ITemplateLanguage<String, String> {
     public NullTemplateLanguage() {
         super();
     }
@@ -37,20 +37,21 @@ public class NullTemplateLanguage implements ITemplateLanguage<Serializable> {
         return message.getText();
     }
 
-    /**
-     * <b>ONLY</b> used for Deserialization!!!!!!!
-     *
-     * @param data Template Data to use.
-     */
-    public void setTemplateData(Serializable data) {
+    @Override
+    public void setData(String data) {
     }
 
-    /**
-     * <b>ONLY</b> used for Serialization!!!!!!!
-     *
-     * @return The Template Data to use.
-     */
-    public Serializable getTemplateData() {
+    @Override
+    public String getData() {
+        return "";
+    }
+
+    @Override
+    public void setPersistence(String persistence) {
+    }
+
+    @Override
+    public String getPersistence() {
         return "";
     }
 }

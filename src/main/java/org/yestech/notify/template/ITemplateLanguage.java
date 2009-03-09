@@ -18,7 +18,7 @@ import java.io.Externalizable;
  * A Template Language used to customize a {@link org.yestech.notify.objectmodel.Message}.
  *
  */
-public interface ITemplateLanguage<D extends Serializable> {
+public interface ITemplateLanguage<P extends Serializable, D extends Serializable> {
 
     /**
      * Applies the Customization to the Message and returns the Custom Message.
@@ -29,17 +29,30 @@ public interface ITemplateLanguage<D extends Serializable> {
     public String apply(IMessage message);
 
     /**
+     * Set some data to use when applying a message
+     *
+     * @param data
+     */
+    public void setData(D data);
+
+    /**
+     * Return the data to use when applying a message
+     * @return data to use when applying a message
+     */
+    public D getData();
+    
+    /**
      * <b>ONLY</b> used for Deserialization!!!!!!!
      *
-     * @param data Template Data to use.
+     * @param persistence Template persistence to use.
      */
     @Required
-    public void setTemplateData(D data);
+    public void setPersistence(P persistence);
 
     /**
      * <b>ONLY</b> used for Serialization!!!!!!!
      *
-     * @return The Template Data to use.
+     * @return The Template persistence to use.
      */
-    public D getTemplateData();
+    public P getPersistence();
 }

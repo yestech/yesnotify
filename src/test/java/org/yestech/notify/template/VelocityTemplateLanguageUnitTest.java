@@ -47,7 +47,7 @@ public class VelocityTemplateLanguageUnitTest {
         VelocityTemplateLanguagePersistence internal = new VelocityTemplateLanguagePersistence();
         internal.setData(templateData);
         internal.setFilePath("/velocity/test.vm");
-        language.setTemplateData(internal);
+        language.setPersistence(internal);
         String result = language.apply(message);
         assertNotNull(result);
         assertEquals("Testing....", result);

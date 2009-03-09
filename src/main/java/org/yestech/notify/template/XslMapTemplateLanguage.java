@@ -23,6 +23,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.HashMap;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -31,10 +32,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslMapTemplate")
-public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
+public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence, HashMap<String, String>> {
     final private static Logger logger = LoggerFactory.getLogger(XslMapTemplateLanguage.class);
 
     private XslTemplateLanguagePersistence templateData;
+    private HashMap<String, String> data;
 
     public XslMapTemplateLanguage() {
         super();
@@ -50,7 +52,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLang
      *
      * @param data Template Data to use.
      */
-    public void setTemplateData(XslTemplateLanguagePersistence data) {
+    public void setPersistence(XslTemplateLanguagePersistence data) {
         templateData = data;
     }
 
@@ -59,7 +61,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLang
      *
      * @return The Template Data to use.
      */
-    public XslTemplateLanguagePersistence getTemplateData() {
+    public XslTemplateLanguagePersistence getPersistence() {
         return templateData;
     }
 
@@ -93,5 +95,15 @@ public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLang
         Reader docReader = new StringReader(document);      //create a reader for that string
         templateMessage = XslUtils.transformMessage(new StreamSource(docReader), new StreamSource(xslFile));
         return templateMessage;
+    }
+
+    @Override
+    public void setData(HashMap<String, String> data) {
+        this.data = data;
+    }
+
+    @Override
+    public HashMap<String, String> getData() {
+        return data;
     }
 }

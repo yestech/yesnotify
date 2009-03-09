@@ -17,16 +17,19 @@ import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
 
 import java.io.StringWriter;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * A non op template.  It preforms no customization, just returns the original message
  */
 @XStreamAlias("velocityTemplate")
-public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence> {
+public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence, HashMap<String, Object>> {
     final private static Logger logger = LoggerFactory.getLogger(VelocityTemplateLanguage.class);
     private VelocityEngine ve;
     private VelocityContext context;
     private VelocityTemplateLanguagePersistence templateData;
+    private HashMap<String, Object> data;
 
     public VelocityTemplateLanguage() {
         super();
@@ -74,12 +77,22 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     }
 
     @Override
-    public void setTemplateData(VelocityTemplateLanguagePersistence data) {
+    public void setPersistence(VelocityTemplateLanguagePersistence data) {
         this.templateData = data;
     }
 
     @Override
-    public VelocityTemplateLanguagePersistence getTemplateData() {
+    public VelocityTemplateLanguagePersistence getPersistence() {
         return templateData;
+    }
+
+    @Override
+    public void setData(HashMap<String, Object> data) {
+        this.data = data;
+    }
+
+    @Override
+    public HashMap<String, Object> getData() {
+        return data;
     }
 }

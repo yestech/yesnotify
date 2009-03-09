@@ -10,6 +10,7 @@ package org.yestech.notify.factory;
 
 import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.objectmodel.DefaultNotification;
+import org.yestech.notify.template.ITemplateLanguage;
 
 /**
  * Factory to create a {@link org.yestech.notify.objectmodel.INotification} with no op templating.
@@ -32,7 +33,9 @@ public class DefaultMessageFactory extends BaseMessageFactory
         notification.addCopyRecipients(getCopyRecipients());
         notification.addBlindCopyRecipients(getBlindRecipients());
 
-        notification.setTemplate(getTemplateLanguage());
+        ITemplateLanguage template = getTemplateLanguage();
+        template.setData(getTemplateData());
+        notification.setTemplate(template);
 
         return notification;
     }

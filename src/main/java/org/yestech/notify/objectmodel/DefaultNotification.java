@@ -317,7 +317,7 @@ public class DefaultNotification implements INotification {
             logger.debug("Writing template class name: " + className);
         }
         s.writeUTF(className);
-        s.writeObject(templateLanguage.getTemplateData());
+        s.writeObject(templateLanguage.getPersistence());
     }
 
     /**
@@ -350,7 +350,7 @@ public class DefaultNotification implements INotification {
             logger.debug("Reading template class name: " + className);
         }
         template = (ITemplateLanguage) Clazz.instantiateClass(className);
-        template.setTemplateData(templateData);
+        template.setPersistence(templateData);
     }
 
     public int compareTo(INotification o) {
