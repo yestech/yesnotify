@@ -18,10 +18,9 @@ import org.yestech.notify.objectmodel.IMessage;
 
 import java.io.StringWriter;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
- * A non op template.  It preforms no customization, just returns the original message
+ * A template language that using velocity templates.
  */
 @XStreamAlias("velocityTemplate")
 public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence> {
@@ -54,6 +53,10 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
 
     /**
      * Applies the Customization to the Message and returns the Custom Message.
+     * <br/>
+     * The raw {@link IMessage} is set to key: notificationMessage
+     * <br/>
+     * each entry in the template data is set to the key supplied.
      *
      * @param message Message to Customize
      * @return The custom message result
@@ -61,12 +64,12 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     public String apply(IMessage message) {
         StringWriter writer = new StringWriter();
         try {
-            context.put("notification.message", message);
+            context.put("notificationMessage", message);
             for (Map.Entry<String, Object> entry : templateData.getData().entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
-            ve.setProperty("resource.loader","class");
-            ve.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"); 
+            ve.setProperty("resource.loader", "class");
+            ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
             ve.init();
             Template t = ve.getTemplate(templateData.getFilePath());
             t.merge(context, writer);
