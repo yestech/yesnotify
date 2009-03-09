@@ -18,10 +18,7 @@ import org.yestech.lib.lang.Clazz;
 import org.yestech.notify.template.ITemplateLanguage;
 import org.yestech.notify.template.NullTemplateLanguage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Collection;
 import static java.util.Collections.unmodifiableCollection;
 import java.util.HashSet;

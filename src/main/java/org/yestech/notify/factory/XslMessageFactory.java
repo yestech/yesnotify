@@ -38,7 +38,7 @@ public class XslMessageFactory extends BaseMessageFactory
 
         if (type == null) {
             try {
-                XslTemplateData templateData = (XslTemplateData) getTemplateData();
+                XslTemplateLanguagePersistence templateData = (XslTemplateLanguagePersistence) getTemplateData();
 
                 SAXBuilder builder = new SAXBuilder();
                 Document doc = builder.build(XslUtils.locateFileInApp(templateData.getFilePath()));

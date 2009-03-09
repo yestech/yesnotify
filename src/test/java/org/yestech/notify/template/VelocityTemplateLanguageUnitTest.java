@@ -44,8 +44,10 @@ public class VelocityTemplateLanguageUnitTest {
         HashMap<String, String> templateData = newHashMap();
         templateData.put("test1", "values");
         templateData.put("second", "another");
-        language.setTemplateData(templateData);
-        language.setTemplateFile("/velocity/test.vm");
+        VelocityTemplateLanguagePersistence internal = new VelocityTemplateLanguagePersistence();
+        internal.setData(templateData);
+        internal.setFilePath("/velocity/test.vm");
+        language.setTemplateData(internal);
         String result = language.apply(message);
         assertNotNull(result);
         assertEquals("Testing....", result);

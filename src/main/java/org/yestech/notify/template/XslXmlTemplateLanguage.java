@@ -19,7 +19,6 @@ import javax.xml.transform.stream.StreamSource;
 
 import java.io.File;
 import java.io.Reader;
-import java.io.Serializable;
 import java.io.StringReader;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -29,16 +28,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslXmlTemplate")
-public class XslXmlTemplateLanguage implements ITemplateLanguage {
+public class XslXmlTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(XslXmlTemplateLanguage.class);
 
-    private XslTemplateData templateData;
+    private XslTemplateLanguagePersistence templateData;
 
     public XslXmlTemplateLanguage() {
         super();
     }
 
-    public XslXmlTemplateLanguage(XslTemplateData templateData) {
+    public XslXmlTemplateLanguage(XslTemplateLanguagePersistence templateData) {
         super();
         this.templateData = templateData;
     }
@@ -48,8 +47,8 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage {
      *
      * @param data Template Data to use.
      */
-    public void setTemplateData(Serializable data) {
-        templateData = (XslTemplateData) data;
+    public void setTemplateData(XslTemplateLanguagePersistence data) {
+        templateData = data;
     }
 
     /**
@@ -57,7 +56,7 @@ public class XslXmlTemplateLanguage implements ITemplateLanguage {
      *
      * @return The Template Data to use.
      */
-    public Serializable getTemplateData() {
+    public XslTemplateLanguagePersistence getTemplateData() {
         return templateData;
     }
 

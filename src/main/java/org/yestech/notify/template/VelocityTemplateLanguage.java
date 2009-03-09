@@ -16,18 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
 
-import java.io.Serializable;
 import java.io.StringWriter;
 
 /**
  * A non op template.  It preforms no customization, just returns the original message
  */
 @XStreamAlias("velocityTemplate")
-public class VelocityTemplateLanguage implements ITemplateLanguage {
+public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(VelocityTemplateLanguage.class);
-    private String templateFile;
     private VelocityEngine ve;
     private VelocityContext context;
+    private VelocityTemplateLanguagePersistence templateData;
 
     public VelocityTemplateLanguage() {
         super();
@@ -51,14 +50,6 @@ public class VelocityTemplateLanguage implements ITemplateLanguage {
         this.context = context;
     }
 
-    public String getTemplateFile() {
-        return templateFile;
-    }
-
-    public void setTemplateFile(String templateFile) {
-        this.templateFile = templateFile;
-    }
-
     /**
      * Applies the Customization to the Message and returns the Custom Message.
      *
@@ -69,12 +60,11 @@ public class VelocityTemplateLanguage implements ITemplateLanguage {
         StringWriter writer = new StringWriter();
         try {
             context.put("notification.message", message);
+            context.put("notification.template.params", templateData.getData());
             ve.setProperty("resource.loader","class"); 
             ve.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader"); 
-//            ve.setProperty(
-//                    VelocityEngine.RUNTIME_LOG_LOGSYSTEM, logger);
             ve.init();
-            Template t = ve.getTemplate(templateFile);
+            Template t = ve.getTemplate(templateData.getFilePath());
             t.merge(context, writer);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -83,20 +73,13 @@ public class VelocityTemplateLanguage implements ITemplateLanguage {
         return writer.toString();
     }
 
-    /**
-     * <b>ONLY</b> used for Deserialization!!!!!!!
-     *
-     * @param data Template Data to use.
-     */
-    public void setTemplateData(Serializable data) {
+    @Override
+    public void setTemplateData(VelocityTemplateLanguagePersistence data) {
+        this.templateData = data;
     }
 
-    /**
-     * <b>ONLY</b> used for Serialization!!!!!!!
-     *
-     * @return The Template Data to use.
-     */
-    public Serializable getTemplateData() {
-        return "";
+    @Override
+    public VelocityTemplateLanguagePersistence getTemplateData() {
+        return templateData;
     }
 }

@@ -11,6 +11,9 @@ package org.yestech.notify.template;
 import org.yestech.notify.objectmodel.IMessage;
 
 import java.io.Serializable;
+import java.io.ObjectOutput;
+import java.io.IOException;
+import java.io.ObjectInput;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -19,7 +22,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("nullTemplate")
-public class NullTemplateLanguage implements ITemplateLanguage {
+public class NullTemplateLanguage implements ITemplateLanguage<Serializable> {
     public NullTemplateLanguage() {
         super();
     }

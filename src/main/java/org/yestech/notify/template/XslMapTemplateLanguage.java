@@ -20,7 +20,6 @@ import javax.xml.transform.stream.StreamSource;
 
 import java.io.File;
 import java.io.Reader;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,16 +31,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  *
  */
 @XStreamAlias("xslMapTemplate")
-public class XslMapTemplateLanguage implements ITemplateLanguage {
+public class XslMapTemplateLanguage implements ITemplateLanguage<XslTemplateLanguagePersistence> {
     final private static Logger logger = LoggerFactory.getLogger(XslMapTemplateLanguage.class);
 
-    private XslTemplateData templateData;
+    private XslTemplateLanguagePersistence templateData;
 
     public XslMapTemplateLanguage() {
         super();
     }
 
-    public XslMapTemplateLanguage(XslTemplateData templateData) {
+    public XslMapTemplateLanguage(XslTemplateLanguagePersistence templateData) {
         super();
         this.templateData = templateData;
     }
@@ -51,8 +50,8 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
      *
      * @param data Template Data to use.
      */
-    public void setTemplateData(Serializable data) {
-        templateData = (XslTemplateData) data;
+    public void setTemplateData(XslTemplateLanguagePersistence data) {
+        templateData = data;
     }
 
     /**
@@ -60,7 +59,7 @@ public class XslMapTemplateLanguage implements ITemplateLanguage {
      *
      * @return The Template Data to use.
      */
-    public Serializable getTemplateData() {
+    public XslTemplateLanguagePersistence getTemplateData() {
         return templateData;
     }
 
