@@ -18,11 +18,9 @@ import org.yestech.notify.objectmodel.INotification;
 import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.deliver.INotificationDelivery;
 import org.yestech.notify.deliver.DeliverableMessageType;
-import org.yestech.notify.constant.IMessageType;
 import org.yestech.notify.constant.MessageTypeEnum;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Multimaps.newHashMultimap;
 
 import java.util.List;
 import java.util.Iterator;
