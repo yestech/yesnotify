@@ -17,6 +17,7 @@ import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yestech.notify.objectmodel.INotificationJob;
 import org.yestech.notify.objectmodel.NotificationJob;
 import org.yestech.notify.objectmodel.DefaultNotification;
+import org.apache.activemq.broker.BrokerService;
 
 import java.util.UUID;
 
@@ -43,11 +45,12 @@ public class JmsQueueIntegrationTest {
     private JmsQueueNotificationProducer producer;
 
     @Test
-    public void setSending100Messages() {
+    public void setSending100Messages() throws InterruptedException {
         TestProcessor processor = new TestProcessor();
         consumer.setProcessor(processor);
 
-        for (int i = 0; i < 100; i++) {
+        final int total = 100;
+        for (int i = 0; i < total; i++) {
             INotificationJob job = new NotificationJob(UUID.randomUUID());
             job.addNotification(new DefaultNotification());
             job.addNotification(new DefaultNotification());
@@ -61,18 +64,23 @@ public class JmsQueueIntegrationTest {
             job.addNotification(new DefaultNotification());
             producer.send(job);
         }
-
+         Thread.sleep(5000); //sleep for 5 secs... to make sure broker get fully initialized and processes all the messages
         assertTrue(processor.isCalled());
-//        final INotificationJob notificationJob = context.mock(INotificationJob.class, "notificationJob");
-//        context.checking(new Expectations(){{
-//            oneOf(notificationJob).
-//        }});
-//        producer.send(notificationJob);
+        assertEquals(total, processor.getCount());
 
     }
 
     private class TestProcessor implements INotificationProcessor {
         boolean called;
+        int count;
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
 
         private TestProcessor() {
         }
@@ -87,6 +95,7 @@ public class JmsQueueIntegrationTest {
 
         public void process(INotificationJob notificationJob) {
             called = true;
+            ++count;
         }
     }
 }
