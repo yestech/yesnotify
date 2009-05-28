@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
  * @author Artie Copeland
  * @version $Revision: $
  */
-public class NoOpProcessor implements INotificationProcessor {
-    final private static Logger logger = LoggerFactory.getLogger(NoOpProcessor.class);
+public class NoOpNotificationProcessor implements INotificationProcessor {
+    final private static Logger logger = LoggerFactory.getLogger(NoOpNotificationProcessor.class);
 
     @Override
     public void process(INotificationJob notificationJob) {

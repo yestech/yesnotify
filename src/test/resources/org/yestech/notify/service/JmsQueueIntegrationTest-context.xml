@@ -105,7 +105,7 @@
     <!-- this is the Message Driven POJO (MDP) -->
     <bean id="jmsConsumer" class="org.yestech.notify.service.JmsQueueNotificationConsumer" p:processor-ref="noOpProcessor"/>
 
-    <bean id="noOpProcessor" class="org.yestech.notify.service.NoOpProcessor" />
+    <bean id="noOpProcessor" class="org.yestech.notify.service.NoOpNotificationProcessor" />
     <!--<bean id="notifyConsumer" class="org.jencks.JCAConnector" p:jcaContainer-ref="jencks" p:ref="jmsConsumer">-->
         <!-- subscription details -->
         <!--<property name="activationSpec">-->
