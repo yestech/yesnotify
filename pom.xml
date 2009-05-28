@@ -113,6 +113,18 @@
             <version>1.6.1</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>1.6.1</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+            <version>1.6.1</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -126,8 +138,8 @@
                     </configuration>
                 </plugin>
                 <!--<plugin>-->
-                    <!--<groupId>org.apache.camel</groupId>-->
-                    <!--<artifactId>camel-maven-plugin</artifactId>-->
+                <!--<groupId>org.apache.camel</groupId>-->
+                <!--<artifactId>camel-maven-plugin</artifactId>-->
                 <!--</plugin>-->
             </plugins>
         </pluginManagement>
@@ -161,14 +173,194 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!--<plugin>-->
+                        <!--<groupId>org.codehaus.mojo</groupId>-->
+                        <!--<artifactId>appassembler-maven-plugin</artifactId>-->
+                        <!--<version>1.0-SNAPSHOT</version>-->
+                        <!--<configuration>-->
+                            <!--<repositoryLayout>flat</repositoryLayout>-->
+                            <!--<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>-->
+                            <!--<target>/home/erik/dev/oss/appassembler-hg/appassembler-maven-plugin/target</target>-->
+
+                            <!--<defaultJvmSettings>-->
+                                <!--<initialMemorySize>256M</initialMemorySize>-->
+                                <!--<maxMemorySize>1024M</maxMemorySize>-->
+                                <!--<systemProperties>-->
+                                <!--<systemProperty>java.security.policy=conf/policy.all</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.port=8999</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.authenticate=false</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.ssl=false</systemProperty>-->
+                                <!--</systemProperties>-->
+                                <!--<extraArguments>-->
+                                    <!--<extraArgument>-server</extraArgument>-->
+                                <!--</extraArguments>-->
+                            <!--</defaultJvmSettings>-->
+
+                            <!--<daemons>-->
+                                <!--<daemon>-->
+                                    <!--<id>app1</id>-->
+                                    <!--<mainClass>org.apache.camel.spring.Main</mainClass>-->
+                                    <!--<commandLineArguments>-->
+                                        <!--<commandLineArgument>start</commandLineArgument>-->
+                                    <!--</commandLineArguments>-->
+                                    <!--<platforms>-->
+                                        <!--<platform>jsw</platform>-->
+                                    <!--</platforms>-->
+                                    <!--<generatorConfigurations>-->
+                                        <!--<generatorConfiguration>-->
+                                            <!--<generator>jsw</generator>-->
+                                            <!--<includes>-->
+                                                <!--<include>linux-x86-32</include>-->
+                                                <!--<include>linux-x86-64</include>-->
+                                            <!--</includes>-->
+                                            <!--<configuration>-->
+                                                <!--<property>-->
+                                                    <!--<name>configuration.directory.in.classpath.first</name>-->
+                                                    <!--<value>etc</value>-->
+                                                <!--</property>-->
+                                                <!--<property>-->
+                                                    <!--<name>set.default.REPO_DIR</name>-->
+                                                    <!--<value>lib</value>-->
+                                                <!--</property>-->
+                                                <!--<property>-->
+                                                    <!--<name>wrapper.logfile</name>-->
+                                                    <!--<value>logs/wrapper.log</value>-->
+                                                <!--</property>-->
+                                                <!--<property>-->
+                                                    <!--<name>run.as.user.envvar</name>-->
+                                                    <!--<value>yesnotify</value>-->
+                                                <!--</property>-->
+                                            <!--</configuration>-->
+                                        <!--</generatorConfiguration>-->
+                                    <!--</generatorConfigurations>-->
+                                <!--</daemon>-->
+                            <!--</daemons>-->
+                        <!--</configuration>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>generate-jsw-scripts</id>-->
+                                <!--<phase>package</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>generate-daemons</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                    <!--</plugin>-->
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                        <configuration>
+                            <repositoryLayout>flat</repositoryLayout>
+                            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                            <target>target/appassembler-maven-plugin</target>
+
+                            <defaultJvmSettings>
+                                <initialMemorySize>256M</initialMemorySize>
+                                <maxMemorySize>1024M</maxMemorySize>
+                                <!--<systemProperties>-->
+                                <!--<systemProperty>java.security.policy=conf/policy.all</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.port=8999</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.authenticate=false</systemProperty>-->
+                                <!--<systemProperty>com.sun.management.jmxremote.ssl=false</systemProperty>-->
+                                <!--</systemProperties>-->
+                                <extraArguments>
+                                    <extraArgument>-server</extraArgument>
+                                </extraArguments>
+                            </defaultJvmSettings>
+
+                            <daemons>
+                                <daemon>
+                                    <id>yesnotify</id>
+                                    <mainClass>org.apache.camel.spring.Main</mainClass>
+                                    <commandLineArguments>
+                                        <commandLineArgument>start</commandLineArgument>
+                                    </commandLineArguments>
+                                    <platforms>
+                                        <platform>jsw</platform>
+                                    </platforms>
+                                    <generatorConfigurations>
+                                        <generatorConfiguration>
+                                            <generator>jsw</generator>
+                                            <includes>
+                                                <include>linux-x86-32</include>
+                                                <include>linux-x86-64</include>
+                                            </includes>
+                                            <configuration>
+                                                <property>
+                                                    <name>configuration.directory.in.classpath.first</name>
+                                                    <value>etc</value>
+                                                </property>
+                                                <property>
+                                                    <name>set.default.REPO_DIR</name>
+                                                    <value>lib</value>
+                                                </property>
+                                                <property>
+                                                    <name>wrapper.logfile</name>
+                                                    <value>logs/wrapper.log</value>
+                                                </property>
+                                                <property>
+                                                    <name>run.as.user.envvar</name>
+                                                    <value>yesnotify</value>
+                                                </property>
+                                            </configuration>
+                                        </generatorConfiguration>
+                                    </generatorConfigurations>
+                                </daemon>
+                            </daemons>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>generate-jsw-scripts</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>generate-daemons</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
+    <pluginRepositories>
+
+        <pluginRepository>
+            <id>Codehaus Snapshots</id>
+            <url>http://snapshots.repository.codehaus.org/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <!-- Workaround for MNG-2974, see note below -->
+            </releases>
+        </pluginRepository>
+
+    </pluginRepositories>
     <repositories>
         <repository>
             <id>yestech.thirdparty</id>
             <url>http://repo.yestech.org/content/repositories/thirdparty</url>
+        </repository>
+        <repository>
+            <id>Codehaus Snapshots</id>
+            <url>http://snapshots.repository.codehaus.org/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
     <distributionManagement>
