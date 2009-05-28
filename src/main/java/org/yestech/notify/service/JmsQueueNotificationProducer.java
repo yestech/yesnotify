@@ -46,6 +46,7 @@ public class JmsQueueNotificationProducer implements INotificationProducer {
         this.queue = queue;
     }
 
+    @Override
     public void send(final INotificationJob notificationJob) {
         jmsTemplate.send(queue, new MessageCreator()
         {

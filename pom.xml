@@ -107,6 +107,12 @@
             <version>2.5.6.SEC01</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>1.6.1</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -119,6 +125,10 @@
                         <source>1.6</source>
                     </configuration>
                 </plugin>
+                <!--<plugin>-->
+                    <!--<groupId>org.apache.camel</groupId>-->
+                    <!--<artifactId>camel-maven-plugin</artifactId>-->
+                <!--</plugin>-->
             </plugins>
         </pluginManagement>
     </build>

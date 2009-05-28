@@ -26,6 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class NoOpNotificationConsumer implements INotificationConsumer {
     final private static Logger logger = LoggerFactory.getLogger(NoOpNotificationConsumer.class);
 
+    @Override
     public void recieve(INotificationJob notificationJob) {
     }
 }

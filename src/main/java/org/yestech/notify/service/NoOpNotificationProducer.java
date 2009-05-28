@@ -20,6 +20,8 @@ import org.yestech.notify.objectmodel.INotificationJob;
  * @version $Revision: $
  */
 public class NoOpNotificationProducer implements INotificationProducer {
+
+    @Override
     public void send(INotificationJob notificationJob) {
     }
 }

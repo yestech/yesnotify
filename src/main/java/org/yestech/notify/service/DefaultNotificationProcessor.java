@@ -51,6 +51,7 @@ public class DefaultNotificationProcessor implements INotificationProcessor {
         this.deliveries = deliveries;
     }
 
+    @Override
     public void process(INotificationJob notificationJob) {
         Iterator<INotification> notificationIterator = notificationJob.getNotifications();
         if (notificationIterator != null) {

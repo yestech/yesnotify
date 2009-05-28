@@ -46,6 +46,7 @@ public class MemoryQueueNotificationConsumer implements INotificationConsumer {
         this.queue = queue;
     }
 
+    @Override
     public void recieve(INotificationJob notificationJob) {
 //        while (true) {
 //            try {

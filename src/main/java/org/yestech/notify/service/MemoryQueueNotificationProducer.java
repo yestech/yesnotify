@@ -36,6 +36,7 @@ public class MemoryQueueNotificationProducer implements INotificationProducer {
         this.queue = queue;
     }
 
+    @Override
     public void send(INotificationJob notificationJob) {
         if (notificationJob != null) {
             try {

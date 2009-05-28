@@ -16,6 +16,7 @@ package org.yestech.notify.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.INotificationJob;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.jms.MessageListener;
 import javax.jms.Message;
@@ -36,6 +37,7 @@ public class JmsQueueNotificationConsumer implements INotificationConsumer, Mess
         return processor;
     }
 
+    @Required
     public void setProcessor(INotificationProcessor processor) {
         this.processor = processor;
     }
@@ -53,6 +55,7 @@ public class JmsQueueNotificationConsumer implements INotificationConsumer, Mess
         }
     }
 
+    @Override
     public void recieve(INotificationJob notificationJob) {
         processor.process(notificationJob);
     }
