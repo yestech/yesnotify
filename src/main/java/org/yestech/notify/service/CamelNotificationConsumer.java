@@ -16,10 +16,13 @@ package org.yestech.notify.service;
 import org.apache.camel.Processor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
+import org.apache.camel.impl.DefaultMessage;
 import org.yestech.notify.objectmodel.INotificationJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
+
+import java.util.Map;
 
 /**
  * A camel based processor that assumes the body of a {@link Message} is of type
@@ -32,10 +35,19 @@ public class CamelNotificationConsumer implements INotificationConsumer, Process
 
     final private static Logger logger = LoggerFactory.getLogger(CamelNotificationConsumer.class);
 
+    private Map<String, Object> headerParameters;
     private INotificationProcessor processor;
 
     public INotificationProcessor getProcessor() {
         return processor;
+    }
+
+    public Map<String, Object> getHeaderParameters() {
+        return headerParameters;
+    }
+
+    public void setHeaderParameters(Map<String, Object> headerParameters) {
+        this.headerParameters = headerParameters;
     }
 
     @Required
@@ -48,11 +60,18 @@ public class CamelNotificationConsumer implements INotificationConsumer, Process
         final Throwable throwable = exchange.getException();
         if (throwable == null) {
             final Message message = exchange.getIn();
+            Message resultMessage = new DefaultMessage();
             try {
                 final INotificationJob notificationJob = message.getBody(INotificationJob.class);
                 recieve(notificationJob);
+                resultMessage.setBody(notificationJob, INotificationJob.class);
+                if (headerParameters != null) {
+                    resultMessage.setHeaders(headerParameters);
+                }
+                exchange.setOut(resultMessage);
             } catch (Exception e) {
                 logger.error("error retrieving notification job from exchange...");
+                exchange.setException(e);
             }
         } else {
             logger.error("error in the exchange", throwable);
