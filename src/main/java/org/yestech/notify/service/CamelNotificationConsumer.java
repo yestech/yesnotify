@@ -60,15 +60,12 @@ public class CamelNotificationConsumer implements INotificationConsumer, Process
         final Throwable throwable = exchange.getException();
         if (throwable == null) {
             final Message message = exchange.getIn();
-            Message resultMessage = new DefaultMessage();
             try {
                 final INotificationJob notificationJob = message.getBody(INotificationJob.class);
                 recieve(notificationJob);
-                resultMessage.setBody(notificationJob, INotificationJob.class);
                 if (headerParameters != null) {
-                    resultMessage.setHeaders(headerParameters);
+                    message.setHeaders(headerParameters);
                 }
-                exchange.setOut(resultMessage);
             } catch (Exception e) {
                 logger.error("error retrieving notification job from exchange...");
                 exchange.setException(e);
