@@ -19,6 +19,7 @@ import org.yestech.notify.objectmodel.IMessage;
 import org.yestech.notify.deliver.INotificationDelivery;
 import org.yestech.notify.deliver.DeliverableMessageType;
 import org.yestech.notify.constant.MessageTypeEnum;
+import org.terracotta.modules.annotations.InstrumentedClass;
 
 import static com.google.common.collect.Maps.newHashMap;
 
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author $Author: $
  * @version $Revision: $
  */
+@InstrumentedClass
 public class DefaultNotificationProcessor implements INotificationProcessor {
     private Map<MessageTypeEnum, INotificationDelivery> deliveries = newHashMap();
 
