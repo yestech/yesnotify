@@ -371,6 +371,12 @@
         <pluginRepository>
             <id>terracotta-repository</id>
             <url>http://www.terracotta.org/download/reflector/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
     <repositories>
@@ -391,6 +397,12 @@
         <repository>
             <id>terracotta-repository</id>
             <url>http://www.terracotta.org/download/reflector/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
     <distributionManagement>
