@@ -385,6 +385,16 @@
             <url>http://repo.yestech.org/content/repositories/thirdparty</url>
         </repository>
         <repository>
+            <id>blackbox.thirdparty</id>
+            <url>http://blackbox.yestech.org/content/repositories/thirdparty</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
             <id>Codehaus Snapshots</id>
             <url>http://snapshots.repository.codehaus.org/</url>
             <snapshots>
@@ -401,7 +411,7 @@
                 <enabled>true</enabled>
             </releases>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
