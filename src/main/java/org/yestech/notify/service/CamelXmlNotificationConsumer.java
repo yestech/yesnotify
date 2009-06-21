@@ -69,7 +69,6 @@ public class CamelXmlNotificationConsumer implements INotificationConsumer, Proc
                     message.setHeaders(headerParameters);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
                 logger.error("error retrieving notification job from exchange...", e);
                 exchange.setException(e);
             }

@@ -17,47 +17,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.terracotta.message.pipe.Pipe;
+import org.terracotta.modules.annotations.Root;
 import org.yestech.lib.xml.XmlUtils;
 import org.yestech.notify.objectmodel.INotificationJob;
 
 /**
+ * A producer that publishes to a Terracotta Pipe.
+ * 
  * @author Artie Copeland
  * @version $Revision: $
  */
 @SuppressWarnings("unchecked")
 public class TerracottaNotificationProducer implements INotificationProducer {
     final private static Logger logger = LoggerFactory.getLogger(TerracottaNotificationProducer.class);
-//    private String queueName;
-//    private String topologyName;
-//    private int queueSize = 1000;
 
+    @Root
     private Pipe pipe;
-
-//    public int getPipeSize() {
-//        return queueSize;
-//    }
-//
-//    public void setPipeSize(int queueSize) {
-//        this.queueSize = queueSize;
-//    }
-//
-//    public String getTopologyName() {
-//        return topologyName;
-//    }
-//
-//    @Required
-//    public void setTopologyName(String topologyName) {
-//        this.topologyName = topologyName;
-//    }
-//
-//    public String getPipeName() {
-//        return queueName;
-//    }
-//
-//    @Required
-//    public void setPipeName(String queueName) {
-//        this.queueName = queueName;
-//    }
 
     public Pipe getPipe() {
         return pipe;
@@ -66,15 +41,10 @@ public class TerracottaNotificationProducer implements INotificationProducer {
     @Required
     public void setPipe(Pipe pipe) {
         this.pipe = pipe;
-        System.out.println("TerracottaNotificationProducer pipe: " + pipe);
     }
 
     @Override
     public void send(INotificationJob notificationJob) {
-//...
-//...
-//String something = pipe.take();
-
         final String notificationXml = XmlUtils.toXml(notificationJob);
         try {
             pipe.put(notificationXml);
