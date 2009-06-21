@@ -18,6 +18,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultMessage;
 import org.yestech.notify.objectmodel.INotificationJob;
+import org.yestech.lib.xml.XmlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -25,15 +26,15 @@ import org.springframework.beans.factory.annotation.Required;
 import java.util.Map;
 
 /**
- * A camel based processor that assumes the body of a {@link Message} is of type
+ * A camel based processor that assumes the body of a {@link org.apache.camel.Message} is an Xml representation of type
  * {@link org.yestech.notify.objectmodel.INotificationJob}.
- * 
+ *
  * @author Artie Copeland
  * @version $Revision: $
  */
-public class CamelNotificationConsumer implements INotificationConsumer, Processor {
+public class CamelXmlNotificationConsumer implements INotificationConsumer, Processor {
 
-    final private static Logger logger = LoggerFactory.getLogger(CamelNotificationConsumer.class);
+    final private static Logger logger = LoggerFactory.getLogger(CamelXmlNotificationConsumer.class);
 
     private Map<String, Object> headerParameters;
     private INotificationProcessor processor;
@@ -61,12 +62,14 @@ public class CamelNotificationConsumer implements INotificationConsumer, Process
         if (throwable == null) {
             final Message message = exchange.getIn();
             try {
-                final INotificationJob notificationJob = message.getBody(INotificationJob.class);
+                final String xmlNotificationJob = message.getBody(String.class);
+                INotificationJob notificationJob = XmlUtils.fromXml(xmlNotificationJob);
                 recieve(notificationJob);
                 if (headerParameters != null) {
                     message.setHeaders(headerParameters);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 logger.error("error retrieving notification job from exchange...", e);
                 exchange.setException(e);
             }
