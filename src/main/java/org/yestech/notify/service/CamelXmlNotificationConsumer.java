@@ -64,6 +64,7 @@ public class CamelXmlNotificationConsumer implements INotificationConsumer, Proc
             try {
                 final String xmlNotificationJob = message.getBody(String.class);
                 INotificationJob notificationJob = XmlUtils.fromXml(xmlNotificationJob);
+                message.setBody(notificationJob);
                 recieve(notificationJob);
                 if (headerParameters != null) {
                     message.setHeaders(headerParameters);
