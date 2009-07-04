@@ -32,7 +32,7 @@ import java.util.Map;
  * @author Artie Copeland
  * @version $Revision: $
  */
-public class CamelXmlNotificationConsumer implements INotificationConsumer, Processor {
+public class CamelXmlNotificationConsumer implements INotificationConsumer {
 
     final private static Logger logger = LoggerFactory.getLogger(CamelXmlNotificationConsumer.class);
 
@@ -56,8 +56,7 @@ public class CamelXmlNotificationConsumer implements INotificationConsumer, Proc
         this.processor = processor;
     }
 
-    @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         final Throwable throwable = exchange.getException();
         if (throwable == null) {
             final Message message = exchange.getIn();
