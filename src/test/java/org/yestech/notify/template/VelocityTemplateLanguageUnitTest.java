@@ -34,7 +34,7 @@ public class VelocityTemplateLanguageUnitTest {
     private VelocityTemplateLanguage language;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         language = new VelocityTemplateLanguage();
     }
 
