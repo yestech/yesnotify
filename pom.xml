@@ -9,8 +9,8 @@
     <name>YES Notify</name>
     <url>http://yestech.org</url>
     <scm>
-        <connection>scm:git:http://github.com/yestech/yesmultimedia/tree/master</connection>
-        <developerConnection>scm:git:http://github.com/yestech/yesmultimedia/tree/master</developerConnection>
+        <connection>scm:git:http://github.com/yestech/yesnotify/tree/master</connection>
+        <developerConnection>scm:git:http://github.com/yestech/yesnotify/tree/master</developerConnection>
     </scm>
     <organization>
         <name>YES Technology Association</name>
