@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -7,6 +8,40 @@
     <version>1.0.0-SNAPSHOT</version>
     <name>YES Notify</name>
     <url>http://yestech.org</url>
+    <scm>
+        <connection>scm:git:http://github.com/yestech/yesmultimedia/tree/master</connection>
+        <developerConnection>scm:git:http://github.com/yestech/yesmultimedia/tree/master</developerConnection>
+    </scm>
+    <organization>
+        <name>YES Technology Association</name>
+        <url>http://yestech.org</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>LGPLv3</name>
+            <url>http://opensource.org/licenses/lgpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>artie</id>
+            <name>Artie Copeland</name>
+            <email>artie@yestech.org</email>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>aj</id>
+            <name>AJ Wright</name>
+            <email>ayax79@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
     <properties>
         <tim.masterworker.version>2.1.1</tim.masterworker.version>
         <tim.pipes.version>2.1.1</tim.pipes.version>
@@ -196,6 +231,20 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.0-alpha-4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <!--<plugin>-->
                     <!--<groupId>org.codehaus.mojo</groupId>-->
                     <!--<artifactId>appassembler-maven-plugin</artifactId>-->
@@ -378,21 +427,29 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-    </pluginRepositories>
-    <repositories>
-        <repository>
-            <id>yestech.thirdparty</id>
-            <url>http://repo.yestech.org/content/repositories/thirdparty</url>
-        </repository>
-        <repository>
-            <id>blackbox.thirdparty</id>
-            <url>http://blackbox.yestech.org/content/repositories/thirdparty</url>
+        <pluginRepository>
+            <id>yestech-snapshots</id>
+            <name>YES Technology Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>yestech-snapshots</id>
+            <name>YES Technology Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>Codehaus Snapshots</id>
@@ -417,14 +474,14 @@
     </repositories>
     <distributionManagement>
         <repository>
-            <id>yestech.release</id>
-            <name>Yestech release repository</name>
-            <url>http://repo.yestech.org/content/repositories/releases</url>
+            <id>yestech-releases</id>
+            <name>YES Technology Release Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/github-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>yestech.snapshots</id>
-            <name>Yestech snapshots repository</name>
-            <url>http://repo.yestech.org/content/repositories/snapshots</url>
+            <id>yestech-snapshots</id>
+            <name>YES Technology Snapshot Repository</name>
+            <url>http://oss.sonatype.org/content/repositories/github-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
