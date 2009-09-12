@@ -11,10 +11,12 @@ package org.yestech.notify.template;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yestech.notify.objectmodel.IMessage;
+import org.yestech.notify.util.Sl4jLogChute;
 
 import java.io.StringWriter;
 import java.util.Map;
@@ -29,9 +31,13 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
     private VelocityContext context;
     private VelocityTemplateLanguagePersistence templateData;
 
-    public VelocityTemplateLanguage() {
+    public VelocityTemplateLanguage() throws Exception {
         super();
         ve = new VelocityEngine();
+        ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new Sl4jLogChute());
+        ve.setProperty("resource.loader", "class");
+        ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        ve.init();
         context = new VelocityContext();
     }
 
@@ -68,8 +74,6 @@ public class VelocityTemplateLanguage implements ITemplateLanguage<VelocityTempl
             for (Map.Entry<String, Object> entry : templateData.getData().entrySet()) {
                 context.put(entry.getKey(), entry.getValue());
             }
-            ve.setProperty("resource.loader", "class");
-            ve.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
             ve.init();
             Template t = ve.getTemplate(templateData.getFilePath());
             t.merge(context, writer);
